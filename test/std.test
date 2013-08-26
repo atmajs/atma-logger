@@ -1,0 +1,14 @@
+
+include
+    .inject('/lib/logger.js')
+    .done(function(resp){
+
+    	logger.log('color', {some: true});
+        
+        logger.cfg('color', 'none');
+    
+        eq(logger.formatMessage('some "%s"', 'name'), 'some "name"');
+        
+        
+        logger.cfg('color', 'ascii');
+    });
