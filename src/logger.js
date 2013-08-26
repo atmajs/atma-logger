@@ -47,6 +47,9 @@ var Logger = (function(){
             case 'color':
                 Color.define(value);
                 break;
+            case 'level':
+                _level = value;
+                break;
         }
     }
     
@@ -80,11 +83,6 @@ var Logger = (function(){
         },
         warn: function(){
             message_write(message_format(arguments).yellow);
-            return this;
-        },
-        
-        setLevel: function(level){
-            _level = level;
             return this;
         }
     };

@@ -28,6 +28,7 @@
 	
 	// import ../src/transport/Transport.js
 	// import ../src/logger.js
+	// import ../src/configurate.js
 	
 	exports.logger = Logger;
 	

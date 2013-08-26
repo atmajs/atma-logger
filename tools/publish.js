@@ -44,7 +44,12 @@ function publish(done) {
         .findAction('shell')
         .done(function(handler){
             handler.process({
-                command: 'npm publish'
+                command: [
+                    'npm publish',
+                    'git add -u',
+                    'git commit -am build-' + pckg.version,
+                    'git push origin master'
+                ]
             }, done);
         });
 }
