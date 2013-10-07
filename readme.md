@@ -1,8 +1,8 @@
 Logger
 ----
 
-
 Features:
+
 - string colors
 - object formatters
 - object color theme
@@ -14,7 +14,7 @@ Features:
 ### Color
 ```javascript
 
-    'lorem impsum'
+    'lorem ipsum'
         .red
 		.green
 		.yellow
@@ -26,8 +26,9 @@ Features:
 		.italic
 		.underline
 		.inverse
+        ;
 
-    'green<bold<lorem> ipusm>'.color
+    'green<bold<lorem> ipsum>'.color
 
 ```
 
@@ -46,6 +47,21 @@ Features:
         .warn
         .error
         ;
+
+```
+
+
+### Config
+
+```javascript
+
+logger.cfg(key, value);
+logger.cfg(cfgObject); // {key: value, ...}
+
+/** KEYS
+ * color: 'none'|'ascii'|'html'
+ * level: 5 (current min log levels to output)
+ */
 
 ```
 
