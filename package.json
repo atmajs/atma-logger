@@ -9,6 +9,9 @@
     "main": "./lib/logger.js",
     "repository": {},
     "license": "MIT",
+    "devDependencies": {
+        "atma": ">0.0.0"
+    },
     "scripts" : {
         "test" : "node_modules/.bin/atma test"
     }
