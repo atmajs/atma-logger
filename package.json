@@ -8,5 +8,8 @@
     "version": "0.0.69",
     "main": "./lib/logger.js",
     "repository": {},
-    "license": "MIT"
+    "license": "MIT",
+    "scripts" : {
+        "test" : "node_modules/.bin/atma test"
+    },
 }
