@@ -5,14 +5,14 @@
         "name": "Alexander Kit",
         "email": "source.kit@gmail.com"
     },
-    "version": "0.0.69",
+    "version": "0.0.70",
     "main": "./lib/logger.js",
     "repository": {},
     "license": "MIT",
     "devDependencies": {
         "atma": ">0.0.0"
     },
-    "scripts" : {
-        "test" : "node_modules/.bin/atma test"
+    "scripts": {
+        "test": "node_modules/.bin/atma test"
     }
 }
