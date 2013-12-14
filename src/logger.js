@@ -1,7 +1,9 @@
 
 var Logger = (function(){
     
-    var _cfg = {},
+    var _cfg = {
+            logCaller: true
+        },
         _transport,
         _level = 50;
    
@@ -39,6 +41,9 @@ var Logger = (function(){
     }
     
     function message_write(message) {
+        if (_cfg.logCaller) 
+            message += stack_formatCaller(' (F:L)', 4);
+            
         Transport.write(message);
     }
     

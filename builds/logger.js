@@ -24,6 +24,7 @@
 	
 	// import ../src/utils/obj.js
 	// import ../src/utils/function.js
+	// import ../src/utils/stack.js
 	// import ../src/color/color.js
 	
 	// import ../src/transport/Transport.js
