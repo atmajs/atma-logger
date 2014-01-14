@@ -42,7 +42,7 @@ var Logger = (function(){
     
     function message_write(message) {
         if (_cfg.logCaller) 
-            message += stack_formatCaller(' (F:L)', 4);
+            message += stack_formatCaller(' (F:L)', 5);
             
         Transport.write(message);
     }
@@ -54,6 +54,10 @@ var Logger = (function(){
                 break;
             case 'level':
                 _level = value;
+                break;
+            
+            default:
+                _cfg[key] = value;
                 break;
         }
     }
