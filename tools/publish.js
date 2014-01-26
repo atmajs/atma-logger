@@ -2,18 +2,8 @@
 include.exports = {
     process: function(config, done){
         
-        var raw = app.config.raw,
-            defaults = raw.defaults,
-            actions = defaults.map(function(x){
-                if (raw[x] == null) {
-                    logger.error('Configuration not found', x);
-                    return null;
-                }
-                return raw[x];
-            })
-        
         app
-            .run(actions)
+            .run()
             .always(function(){
                 
                 publish(done);
