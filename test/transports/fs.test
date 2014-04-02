@@ -33,6 +33,7 @@ UTest({
         initLogger();
         
         Logger.log('Foo');
+        eq_(logsDir.exists(), true);
         
         var files = logsDir
             .readFiles('*.txt')
