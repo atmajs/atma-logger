@@ -61,7 +61,7 @@ var file_append,
     };
     
     file_append = function(path, str){
-        console.log('>>append file', path, str.length);
+        
         try {
             var fd = Fs.openSync(path, 'a');
         
