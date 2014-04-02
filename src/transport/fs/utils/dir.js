@@ -23,7 +23,7 @@ var dir_read,
         dir_ensure(Path.dirname(path));
         
         try {
-            Fs.mkdirSync(path, 777);
+            Fs.mkdirSync(path);
         } catch(error) {
             
             exception_(error);
