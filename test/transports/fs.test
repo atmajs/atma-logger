@@ -1,0 +1,127 @@
+var logsDir = new io.Directory('test/transports/mylog/'),
+    Logger;
+
+function initLogger(cfg) {
+    Logger = require('../../lib/logger.js').logger
+    Logger.cfg(cfg || {
+        color: 'none',
+        logCaller: false,
+        logDate: 'yyyy_',
+        transport: {
+            type: 'fs',
+            directory: 'mylog',
+            bufferSize: 0,
+            fileSize: 100,
+            filesCount: 5,
+            sync: true
+        }
+    });
+    return Logger;
+}
+
+UTest({
+    $before: function(){
+        logsDir.remove();
+    },
+    $after: function(done){
+        setTimeout(function(){
+            logsDir.remove();
+            done();
+        }, 0);
+    },
+    'write': function(){
+        initLogger();
+        
+        Logger.log('Foo');
+        
+        var files = logsDir
+            .readFiles('/*.txt')
+            .files;
+        
+        var file = files[0];
+        
+        eq_(files.length, 1);
+        has_(file.read(), /^2014_ Foo$/gm);
+        file.content = null;
+        
+        Logger.log('Baz');
+        has_(file.read(), /^2014_ Foo$/gm);
+        has_(file.read(), /^2014_ Baz$/gm);
+    },
+    
+    'restart': function(){
+        initLogger();
+        Logger.log('Qux');
+        
+        var files = logsDir
+            .readFiles('/*.txt')
+            .files;
+        
+        var file = files[0];
+        
+        eq_(files.length, 1);
+        has_(file.read(), /^2014_ Foo$/gm);
+        has_(file.read(), /^2014_ Baz$/gm);
+        has_(file.read(), /^2014_ Qux$/gm);
+    },
+    
+    'fill files': function(){
+       fillToNext(2);
+       fillToNext(3);
+       fillToNext(4);
+       fillToNext(5);
+       fillToNext(6);
+       
+       initLogger();
+       fillToNext(6);
+       
+       initLogger();
+       fillToNext(6);
+    },
+    
+    'html': function(){
+        
+        initLogger({
+            color: 'html',
+            logCaller: true,
+            logDate: 'yyyy_',
+            transport: {
+                type: 'fs',
+                extension: 'html',
+                directory: 'mylog',
+                bufferSize: 0,
+                fileSize: 100,
+                filesCount: 5,
+                sync: true
+            }
+        });
+        
+        Logger.log('Foo'.green);
+        Logger.log('Baz'.cyan.bold);
+        
+        var files = logsDir
+            .readFiles('/*.html')
+            .files;
+        
+        eq_(files.length, 1);
+        
+        var html = files[0].read();
+        
+        has_(html, 'color:green');
+        has_(html, 'color:cyan');
+        has_(html, '<br/>');
+    }
+})
+
+function fillToNext(expectCount) {
+    var i = 10;
+    while( --i > -1){
+        Logger.log('Lorem');
+    }
+    
+     var files = logsDir
+        .readFiles('/*.txt')
+        .files;
+    
+    eq_(files.length, expectCount);
+}

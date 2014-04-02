@@ -1,36 +1,15 @@
-Logger
+NodeJS Logger
 ----
+[![Build Status](https://travis-ci.org/atmajs/atma-logger.svg?branch=master)](https://travis-ci.org/atmajs/atma-logger)
+
 
 Features:
 
-- string colors
+- string colors: ascii and html
 - object formatters
 - object color theme
+- `std` and `fs` transports
 
-@TODO
-- implement File and Database Transport, as for now only stdout is used
-
-
-### Color
-```javascript
-
-    'lorem ipsum'
-        .red
-		.green
-		.yellow
-		.blue
-		.magenta
-		.cyan
-		
-		.bold
-		.italic
-		.underline
-		.inverse
-        ;
-
-    'green<bold<lorem> ipsum>'.color
-
-```
 
 ### Logger
 
@@ -56,12 +35,53 @@ Features:
 ```javascript
 
 logger.cfg(key, value);
-logger.cfg(cfgObject); // {key: value, ...}
+logger.cfg(CfgObject); // {key: value, ...}
 
-/** KEYS
- * color: 'none'|'ascii'|'html'
- * level: 5 (current min log levels to output)
- */
+CfgObject = {
+    color: 'none|ascii|html', // @default: ascii
+    logCaller: false, // @default: true
+    logDate: 'dd-MM hh:mm', //date format pattern, @default: null
+    transport: TransportObject
+}
 
+STD_TransportObject = {
+    type: 'std'
+};
+
+FS_TransportObject = {
+    type: 'fs',
+    
+    // defaults
+    extension: 'txt', 
+    directory: 'logs', /
+    bufferSize: 64,
+    fileSize: 500 * 1024 * 1024,
+    filesCount: 10,
+    sync: false
+};
 ```
 
+### Color
+```javascript
+
+    'lorem ipsum'
+        .red
+		.green
+		.yellow
+		.blue
+		.magenta
+		.cyan
+		
+		.bold
+		.italic
+		.underline
+		.inverse
+        ;
+
+    'green<bold<lorem> ipsum>'.color
+```
+
+
+----
+© MIT
+  Atma.js Project

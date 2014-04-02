@@ -1,4 +1,8 @@
 module.exports = {
-	
-	tests: 'test/**test'
+	suites: {
+		node: {
+			//env: 'lib/logger.js',
+			tests: 'test/**test'
+		}
+	}
 };

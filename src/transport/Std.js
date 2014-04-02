@@ -1,9 +1,14 @@
-transports.std = (function(){
+_transports.std = (function(){
     
     
     return {
         write: function(message){
-            process.stdout.write(message);   
-        }
+            process
+                .stdout
+                .write('\n' + message)
+                ;
+        },
+        
+        cfg: function(){}
     }
 }());

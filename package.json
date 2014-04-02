@@ -1,16 +1,19 @@
 {
     "name": "atma-logger",
-    "description": "Logger / Console + Color",
+    "description": "Logger | Formatter + Color",
     "author": {
         "name": "Alexander Kit",
         "email": "source.kit@gmail.com"
     },
-    "version": "0.0.73",
+    "version": "0.0.74",
     "main": "./lib/logger.min.js",
     "repository": {},
     "license": "MIT",
+    "dependencies": {
+        "atma-formatter": "latest"
+    },
     "devDependencies": {
-        "atma": ">0.0.0"
+        "atma": "latest"
     },
     "scripts": {
         "test": "node_modules/.bin/atma test"

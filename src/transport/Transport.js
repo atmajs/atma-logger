@@ -1,28 +1,34 @@
 var Transport = (function(){
-    var _transport;
-    
-    var transports = {};
+    var _transports = {},
+        _transport;
         
     
     // import Std.js
+    // import fs/transport.js
     
     
-    _transport = transports.std;
+    _transport = _transports.std;
     return {
         
-        define: function(transport){
+        define: function(transportCfg){
             
-            var type = transport.type;
+            var type = transportCfg.type;
             
-            _transport = transports[type];
-            _transport.cfg(transport);
+            _transport = _transports[type];
+            
+            if (typeof _transport === 'function') {
+                // initialize
+                _transport = _transport();
+            }
+            
+            _transport.cfg(transportCfg);
             
             return this;
         },
         
         write: function(message){
             
-            _transport.write('\n' + message);
+            _transport.write(message);
         }
     };
     

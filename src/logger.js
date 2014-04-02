@@ -1,61 +1,21 @@
 
 var Logger = (function(){
     
-    var _cfg = {
-            logCaller: true
-        },
-        _transport,
-        _level = 50;
-   
-    
-    function message_format(args) {
-        var str = '',
-            rgx_format = /%s|%d/,
-            item;
-        
-        var format = args.length > 1
-            && typeof args[0] === 'string'
-            && rgx_format.test(args[0]);
-            
-        
-        for (var i = 0, x, imax = args.length; i < imax; i++){
-            x = args[i];
-            
-            item = typeof x === 'string'
-                ? x
-                : Color.formatJSON(x)
-                ;
-            
-                
-            if (i > 0 && format && rgx_format.test(str)) {
-                str = str.replace(rgx_format, item);
-                continue;
-            }
-            
-            if (str !== '') 
-                str += '  ';
-            
-            str += item;
-        }
-        return str;
-    }
-    
-    function message_write(message) {
-        if (_cfg.logCaller) 
-            message += stack_formatCaller(' (F:L)', 5);
-            
-        Transport.write(message);
-    }
-    
     function cfg_set(key, value) {
         switch (key) {
-            case 'color':
-                Color.define(value);
-                break;
             case 'level':
                 _level = value;
                 break;
             
+            case 'transport':
+                Transport.define(value);
+                break;
+            
+            case 'color':
+                Color.define(value);
+                /* breakthrough */            
+            case 'logCaller':
+            case 'logDate':
             default:
                 _cfg[key] = value;
                 break;
@@ -83,15 +43,16 @@ var Logger = (function(){
         },
         
         log: function(){
-            message_write(message_format(arguments));
+            //message_write(message_format(arguments));
+            Transport.write(message_prepair(arguments))
             return this;
         },
         error: function(){
-            message_write(message_format(arguments).red.bold);
+            Transport.write(message_prepair(arguments).red.bold);
             return this;
         },
         warn: function(){
-            message_write(message_format(arguments).yellow);
+            Transport.write(message_prepair(arguments).yellow);
             return this;
         }
     };
