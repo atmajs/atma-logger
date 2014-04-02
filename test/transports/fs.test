@@ -66,7 +66,18 @@ UTest({
         has_(file.read(), /^2014_ Qux$/gm);
     },
     
-    'fill files': function(){
+    'exception': function(){
+        logsDir.remove();
+        
+        Logger.log('X!');
+        
+        file = new io.File(logsDir.uri.combine('logger-exceptions.txt'));
+        eq_(file.exists(), true);
+        eq_(logsDir.readFiles('*.txt').files.length, 1);
+    },
+    
+    
+    '//fill files': function(){
        fillToNext(2);
        fillToNext(3);
        fillToNext(4);

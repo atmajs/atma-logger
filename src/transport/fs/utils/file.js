@@ -39,7 +39,7 @@ var file_append,
     file_appendAsync = function(path, str, callback){
         
         
-        Fs.open(path, 'a', function(error, fd){
+        Fs.open(path, 'a+', function(error, fd){
             if (error != null) {
                 exception_(error);
                 callback(error);
@@ -69,7 +69,7 @@ var file_append,
             Fs.closeSync(fd);
             
         } catch(error){
-            console.error('>> error', error);
+            exception_(error);
         }
     }
 }());

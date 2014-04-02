@@ -5,15 +5,18 @@
         "name": "Alexander Kit",
         "email": "source.kit@gmail.com"
     },
-    "version": "0.0.75",
+    "version": "0.0.76",
     "main": "./lib/logger.min.js",
-    "repository": {},
+    "repository": {
+        "git": "https://github.com/atmajs/atma-logger.git"
+    },
     "license": "MIT",
     "dependencies": {
         "atma-formatter": "latest"
     },
     "devDependencies": {
-        "atma": "latest"
+        "atma": "latest",
+        "fs-ext": "~0.3.2"
     },
     "scripts": {
         "test": "node_modules/.bin/atma test"
