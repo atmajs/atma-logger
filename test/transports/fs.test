@@ -35,7 +35,7 @@ UTest({
         Logger.log('Foo');
         
         var files = logsDir
-            .readFiles('/*.txt')
+            .readFiles('*.txt')
             .files;
         
         var file = files[0];
@@ -54,7 +54,7 @@ UTest({
         Logger.log('Qux');
         
         var files = logsDir
-            .readFiles('/*.txt')
+            .readFiles('*.txt')
             .files;
         
         var file = files[0];
@@ -100,7 +100,7 @@ UTest({
         Logger.log('Baz'.cyan.bold);
         
         var files = logsDir
-            .readFiles('/*.html')
+            .readFiles('*.html')
             .files;
         
         eq_(files.length, 1);
@@ -120,7 +120,7 @@ function fillToNext(expectCount) {
     }
     
      var files = logsDir
-        .readFiles('/*.txt')
+        .readFiles('*.txt')
         .files;
     
     eq_(files.length, expectCount);
