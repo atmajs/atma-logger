@@ -16,10 +16,11 @@ Features:
 
 ```javascript
 
+    // chainable
     logger
         .log('lorem "%s"', 'ipsum');
-        .warn
-        .error
+        .warn(..)
+        .error(..)
         ;
         
     logger(5) // LOG level
@@ -39,6 +40,7 @@ logger.cfg(key, value);
 logger.cfg(CfgObject); // {key: value, ...}
 
 CfgObject = {
+    level: 50,
     color: 'none|ascii|html', // @default: ascii
     logCaller: false, // @default: true
     logDate: 'dd-MM hh:mm', //date format pattern, @default: null

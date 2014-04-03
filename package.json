@@ -5,7 +5,7 @@
         "name": "Alexander Kit",
         "email": "source.kit@gmail.com"
     },
-    "version": "0.0.78",
+    "version": "0.0.79",
     "main": "./lib/logger.min.js",
     "repository": {
         "type": "git",

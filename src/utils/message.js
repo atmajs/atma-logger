@@ -32,7 +32,10 @@ var message_format,
 		for (var i = 0, x, imax = args.length; i < imax; i++) {
 			x = args[i];
 
-			item = typeof x === 'string' ? x : Color.formatJSON(x);
+			item = typeof x === 'string'
+				? x
+				: Color.formatJSON(x)
+				;
 
 			if (i > 0 && format && rgx_format.test(str)) {
 				str = str.replace(rgx_format, item);
