@@ -80,7 +80,7 @@ UTest({
 	},
 	
 	
-	'!fill files': function(done){
+	'fill files': function(done){
         setTimeout(function(){
             logsDir.remove();
             
@@ -109,6 +109,17 @@ UTest({
             
             initLogger(cfg);
             fillToNext(5, 7);
+            
+            initLogger(cfg);
+            fillToNext(5, 8);
+            
+            var files = logsDir
+                .readFiles('*.txt')
+                .files;
+            
+            eq_(files.length, 5);
+            has_(files[0].read(), 'Lorem4')
+            has_(files[4].read(), 'Lorem8')
             
             done();
         })
