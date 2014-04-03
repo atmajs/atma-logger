@@ -1,7 +1,7 @@
 NodeJS Logger
 ----
 [![Build Status](https://travis-ci.org/atmajs/atma-logger.svg?branch=master)](https://travis-ci.org/atmajs/atma-logger)
-
+[![NPM version](https://badge.fury.io/js/atma-logger.svg)](http://badge.fury.io/js/atma-logger)
 
 Features:
 
