@@ -247,9 +247,8 @@ function fillToNext(expectCount, id) {
 	while( --i > -1){
 		Logger.log('1234Lorem' + (id || expectCount));
 	}
+    Logger.log('end');
 	
-    eq_(logsDir.exists(), true);
-    
     var files = logsDir
         .readFiles('*.txt')
         .files
