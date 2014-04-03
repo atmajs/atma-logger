@@ -12,7 +12,7 @@ function initLogger(cfg) {
 			directory: 'mylog',
 			bufferSize: 0,
 			fileSize: 100,
-			filesCount: 5,
+			filesCount: 4,
 			sync: true
 		}
 	});
@@ -80,24 +80,35 @@ UTest({
 	},
 	
 	
-	'fill files': function(done){
+	'!fill files': function(done){
         setTimeout(function(){
             logsDir.remove();
             
-            initLogger();
+            var cfg = {
+                color: 'none',
+                logCaller: false,
+                transport: {
+                    type: 'fs',
+                    directory: 'mylog',
+                    bufferSize: 0,
+                    fileSize: 100,
+                    filesCount: 4,
+                    sync: true
+                }
+            };
             
+            initLogger(cfg);
             fillToNext(1);
             fillToNext(2);
             fillToNext(3);
             fillToNext(4);
             fillToNext(5);
-            fillToNext(6);
             
-            initLogger();
-            fillToNext(6, 7);
+            initLogger(cfg);
+            fillToNext(5, 6);
             
-            initLogger();
-            fillToNext(6, 8);
+            initLogger(cfg);
+            fillToNext(5, 7);
             
             done();
         })
@@ -214,7 +225,7 @@ UTest({
 function fillToNext(expectCount, id) {
 	var i = 10;
 	while( --i > -1){
-		Logger.log('Lore' + (id || expectCount));
+		Logger.log('1234Lorem' + (id || expectCount));
 	}
 	
     eq_(logsDir.exists(), true);
