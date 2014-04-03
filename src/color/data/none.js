@@ -1,7 +1,7 @@
 	
 var ColorNone = {
 	END : '',
-    value: {
+	value: {
 		red: '',
 		green: '',
 		yellow: '',
@@ -15,7 +15,7 @@ var ColorNone = {
 		underline: '',
 		inverse: ''
 	},
-    start: function(key){
-        return '';
-    }
+	start: function(key){
+		return '';
+	}
 };

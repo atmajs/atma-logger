@@ -7,13 +7,13 @@ var message_format,
 		var message = message_format(args);
 		
 		if (_cfg.logCaller !== false) 
-            message += stack_formatCaller(' (F:L)', 5);
-        
-        if (_cfg.logDate !== false) {
-            message = date_formatForMessage(_cfg.logDate)
-                + ' '
-                + message;
-        }
+			message += stack_formatCaller(' (F:L)', 5);
+		
+		if (_cfg.logDate !== false) {
+			message = date_formatForMessage(_cfg.logDate)
+				+ ' '
+				+ message;
+		}
 		
 		return message;
 	};

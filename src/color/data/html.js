@@ -16,13 +16,13 @@ var ColorHtml = {
 		underline: 'text-decoration:underline',
 		inverse: 'color:black;background:white'
 	},
-    
-    
-    start: function(key){
-        var str = '<span style="'
-            + this.value[key]
-            + '">';
-        
-        return str;
-    }
+	
+	
+	start: function(key){
+		var str = '<span style="'
+			+ this.value[key]
+			+ '">';
+		
+		return str;
+	}
 };
