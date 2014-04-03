@@ -52,11 +52,11 @@ _transports.fs = function(){
 			if (cfg.sync != null) 
 				use_SYNC = cfg.sync;
 				
-			if (cfg.interceptStdOut) 
+			if (cfg.interceptStd) 
 				std_intercept();
 		},
         
-        interceptStdOut: function(state){
+        interceptStd: function(state){
             std_intercept(state);
         }
 	};

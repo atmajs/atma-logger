@@ -54,7 +54,7 @@ FS_TransportObject = {
     
     // defaults
     extension: 'txt', 
-    directory: 'logs', /
+    directory: 'logs', 
     bufferSize: 64,
     fileSize: 500 * 1024 * 1024,
     filesCount: 10,
@@ -62,7 +62,7 @@ FS_TransportObject = {
     
     // when set to `true` then all std writes, like - console.log,
     // will be also written to the file system.
-    interceptStdOut: false
+    interceptStd: false
 };
 ```
 

@@ -152,11 +152,11 @@ UTest({
 					directory: 'mylog',
 					bufferSize: 0,
 					sync: true,
-					interceptStdOut: true
+					interceptStd: true
 				}
 			});
 			console.log('Interceptor');
-			Logger.getTransport().interceptStdOut(false);
+			Logger.getTransport().interceptStd(false);
 			
 			
 			var files = logsDir
