@@ -69,14 +69,22 @@ UTest({
 		has_(file.read(), /^2014_ Qux$/gm);
 	},
 	
-	'exception': function(){
-		logsDir.remove();
-		
-		Logger.log('X!');
-		
-		file = new io.File(logsDir.uri.combine('logger-exceptions.txt'));
-		eq_(file.exists(), true);
-		eq_(logsDir.readFiles('*.txt').files.length, 1);
+	'exception': function(done){
+        initLogger();
+        Logger.log('create file');
+        setTimeout(function(){
+            // remove file
+            logsDir.remove();
+            setTimeout(function(){
+                // exception - no file to write
+                Logger.log('X!');
+                
+                file = new io.File(logsDir.uri.combine('logger-exceptions.txt'));
+                eq_(file.exists(), true);
+                eq_(logsDir.readFiles('*.txt').files.length, 1);
+                done();
+            });
+        });
 	},
 	
 	
@@ -87,6 +95,7 @@ UTest({
             var cfg = {
                 color: 'none',
                 logCaller: false,
+                logDate: false,
                 transport: {
                     type: 'fs',
                     directory: 'mylog',
