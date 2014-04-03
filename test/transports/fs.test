@@ -255,7 +255,7 @@ function fillToNext(expectCount, id) {
         ;
 	
 	assert(
-        files.length === expectCount || files.length - 1 === expectCount,
-        files.count + '/' + expectCount
+        files.length <= expectCount,
+        files.length + '/' + expectCount
     );
 }
