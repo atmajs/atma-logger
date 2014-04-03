@@ -1,6 +1,6 @@
 function exception_(error) {
 	
-	try {
+    try {
 		Fs.appendFileSync(
 			Path.resolve(_directory, 'logger-exceptions.txt'),
 			message_format([error]) + os_EndOfLine

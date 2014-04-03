@@ -24,7 +24,7 @@ var Logger = (function(){
 	
 	
 	var LoggerProto = {
-			cfg: function(mix){
+		cfg: function(mix){
 			if (typeof mix === 'string'){
 				if (arguments.length === 1) 
 					return _cfg[mix];
@@ -43,7 +43,6 @@ var Logger = (function(){
 		},
 		
 		log: function(){
-			//message_write(message_format(arguments));
 			Transport.write(message_prepair(arguments))
 			return this;
 		},
@@ -56,7 +55,7 @@ var Logger = (function(){
 			return this;
 		},
 		
-		get Transport () {
+		getTransport: function() {
 			return Transport.get();
 		}
 	};

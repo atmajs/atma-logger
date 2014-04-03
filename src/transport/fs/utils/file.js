@@ -11,7 +11,7 @@ var file_append,
 
 	file_readSize = function(path) {
 		try {
-			var x = Fs.statSync(path);
+			var x = Fs.lstatSync(path);
 			return x && x.size;
 		} catch (error) {
 			return 0;
@@ -22,48 +22,53 @@ var file_append,
 		Fs.unlink(path, function(error) {
 			if (error)
 				exception_(error);
-
+	
 			callback(error);
 		});
 	};
 
 	file_remove = function(path) {
 		try {
-			Fs.unlink(path);
-		} catch (error) {}
+			
+			Fs.unlinkSync(path);
+		} catch (error) {
+			exception_(error);
+		}
 	}
 
 	file_appendAsync = function(path, str, callback) {
-
-
-		Fs.open(path, 'a+', function(error, fd) {
+		if (!str) {
+			callback();
+			return;
+		}
+	
+		Fs.open(path, 'a', function(error, fd) {
 			if (error != null) {
 				exception_(error);
 				callback(error);
 				return;
 			}
-
+	
 			var buffer = new Buffer(str, 'utf8');
 			Fs.write(fd, buffer, 0, buffer.length, 0, function(error) {
-				if (error) {
+				if (error) 
 					exception_(error);
-					callback(error);
-					return;
-				}
-
+				
 				Fs.close(fd, callback);
 			});
 		});
 	};
 
 	file_append = function(path, str) {
-
+		if (!str) 
+			return;
+		
 		try {
 			var fd = Fs.openSync(path, 'a');
 
 			Fs.writeSync(fd, str);
 			Fs.closeSync(fd);
-
+			
 		} catch (error) {
 			exception_(error);
 		}

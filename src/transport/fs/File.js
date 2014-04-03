@@ -52,15 +52,9 @@ File.prototype = {
 		if (this.buffer.length === 0) 
 			return '';
 		
-		var data = this
-			.buffer
-			.join(newLine)
-			+ newLine
-			;
-		this
-			.buffer
-			.length = 0
-			;
+		var data = this.buffer.join(newLine)+ newLine;
+		
+        this.buffer.length = 0;
 		return data;
 	}
 };

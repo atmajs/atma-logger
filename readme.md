@@ -9,6 +9,7 @@ Features:
 - object formatters
 - object color theme
 - `std` and `fs` transports
+- `fs` with `stdout/stderr` interceptors
 
 
 ### Logger
@@ -57,7 +58,11 @@ FS_TransportObject = {
     bufferSize: 64,
     fileSize: 500 * 1024 * 1024,
     filesCount: 10,
-    sync: false
+    sync: false,
+    
+    // when set to `true` then all std writes, like - console.log,
+    // will be also written to the file system.
+    interceptStdOut: false
 };
 ```
 

@@ -9,6 +9,7 @@ _transports.std = (function(){
 				;
 		},
 		
-		cfg: function(){}
+		cfg: function(){},
+        std: true
 	}
 }());

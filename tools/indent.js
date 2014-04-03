@@ -1,5 +1,5 @@
 (new io
-	.Directory('src/'))
+	.Directory('test/'))
 	.readFiles()
 	.files
 	.forEach(function(file){

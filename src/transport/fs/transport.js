@@ -12,6 +12,7 @@ _transports.fs = function(){
 	// import vars.js
 	// import utils/file.js
 	// import utils/dir.js
+    // import utils/std.js
 	// import File.js
 	// import flow.js
 	// import exception.js
@@ -53,7 +54,11 @@ _transports.fs = function(){
 				
 			if (cfg.interceptStdOut) 
 				std_intercept();
-		}
+		},
+        
+        interceptStdOut: function(state){
+            std_intercept(state);
+        }
 	};
 	
 	return FsTransport;

@@ -15,29 +15,29 @@ var flow_initialize,
 		
 		var files = dir_read(_directory).sort(),
 			filename,
-			imax = files.length,
-			i = -1,
+			i = files.length,
 			
 			rgx = /^\d+_/g
 			;
 		
 		
-		while ( ++i < imax ) {
+		while ( --i > -1 ) {
 			filename = files[i];
 			if (rgx.test(filename)) {
 				break;
 			}
 		}
 		
-		_file = i < imax
+		_file = i > -1
 			? new File(filename.replace(/\.\w+$/, ''), true)
 			: flow_nextFile()
 			;
 			
 		if (files.length > FILE_MAXCOUNT) {
 			files
-				.slice(FILE_MAXCOUNT)
+				.slice(0, files.length - FILE_MAXCOUNT)
 				.forEach(function(filename){
+                 
 					file_remove(Path.resolve(_directory, filename));
 				});
 		}
