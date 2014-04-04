@@ -36,11 +36,8 @@ UTest({
 		Logger.log('Foo');
 		eq_(logsDir.exists(), true);
 		
-		var files = logsDir
-			.readFiles('*.txt')
-			.files;
-		
-		var file = files[0];
+		var files = getFiles(),
+            file = files[0];
 		
 		eq_(files.length, 1);
 		has_(file.read(), /^2014_ Foo$/gm);
@@ -55,11 +52,9 @@ UTest({
 		initLogger();
 		Logger.log('Qux');
 		
-		var files = logsDir
-			.readFiles('*.txt')
-			.files;
-		
-		var file = files[0];
+		var files = getFiles(),
+            file = files[0]
+            ;
 		
 		eq_(files.length, 1);
 		has_(file.read(), /^2014_ Foo$/gm);
@@ -79,7 +74,7 @@ UTest({
                 
                 file = new io.File(logsDir.uri.combine('logger-exceptions.txt'));
                 eq_(file.exists(), true);
-                eq_(logsDir.readFiles('*.txt').files.length, 1);
+                eq_(getFiles().length, 1);
                 done();
             });
         });
@@ -120,9 +115,7 @@ UTest({
             initLogger(cfg);
             fillToNext(5, 8);
             
-            var files = logsDir
-                .readFiles('*.txt')
-                .files;
+            var files = getFiles();
             
             eq_(files.length, 5);
             has_(files[0].read(), 'Lorem4')
@@ -153,9 +146,7 @@ UTest({
             Logger.log('Foo'.green);
             Logger.log('Baz'.cyan.bold);
             
-            var files = logsDir
-                .readFiles('*.html')
-                .files;
+            var files = getFiles('html');
             
             eq_(files.length, 1);
             
@@ -188,11 +179,8 @@ UTest({
 			Logger.getTransport().interceptStd(false);
 			
 			
-			var files = logsDir
-				.readFiles('*.txt')
-				.files;
-			
-			var file = files[0];
+			var files = getFiles(),
+                file = files[0];
 			
 			eq_(files.length, 1);
 			has_(file.read(), /^Interceptor$/gm);
@@ -223,11 +211,9 @@ UTest({
                 
                 setTimeout(function(){
                             
-                    var files = logsDir
-                        .readFiles('*.txt')
-                        .files;
-                    
-                    var file = files[0];
+                    var files = getFiles(),
+                        file = files[0]
+                        ;
                     
                     eq_(files.length, 1);
                     has_(file.read(), /(one)(.|\s)+(two)(.|\s)+three/);
@@ -240,6 +226,22 @@ UTest({
     }
 })
 
+function getFiles(ext) {
+    return logsDir
+        .readFiles('*.' + (ext || 'txt'))
+        .files
+        .sort(function(a, b){
+            if (a.uri.file < b.uri.file) 
+                return -1;
+            
+            if (a.uri.file > b.uri.file) 
+                return 1;
+            
+            return 0;
+        })
+        ;
+}
+
 function fillToNext(expectCount, id) {
 	var i = 10;
 	while( --i > -1){
@@ -247,10 +249,7 @@ function fillToNext(expectCount, id) {
 	}
     Logger.log('end');
 	
-    var files = logsDir
-        .readFiles('*.txt')
-        .files
-        ;
+    var files = getFiles('txt');
 	
 	assert(
         files.length <= expectCount,
