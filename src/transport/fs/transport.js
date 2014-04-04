@@ -33,7 +33,8 @@ _transports.fs = function(){
 			* { extension, directory, filesCount, fileSize, bufferSize }
 			*/
 		cfg: function(cfg){
-			_extension = cfg.extension || path_Ext;    
+			_extension = cfg.extension || path_Ext;
+            
 			_directory = Path.resolve(
 				//process.mainModule.filename,
 				Path.dirname(module.parent.filename),

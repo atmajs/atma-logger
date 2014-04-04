@@ -37,8 +37,8 @@ module.exports = {
 			files: 'builds/logger.js',
 			output: 'lib/global-dev.js',
 			defines: {
-				CommonJS: true,
-				Global: false
+				CommonJS: false,
+				Global: true
 			}
 		},
 	//},

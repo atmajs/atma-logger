@@ -96,7 +96,8 @@ var Logger = (function(){
         
         return log;
 	}
-	
+	Logger.prototype = LoggerProto;
+    
 	obj_extend(Logger, LoggerProto);
 	
 	

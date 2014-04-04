@@ -17,9 +17,7 @@ function initLogger(cfg) {
 		}
 	});
     
-    
-    
-	return Logger;
+    return Logger;
 }
 
 UTest({
