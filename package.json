@@ -5,8 +5,8 @@
         "name": "Alexander Kit",
         "email": "source.kit@gmail.com"
     },
-    "version": "0.0.80",
-    "main": "./lib/logger.min.js",
+    "version": "0.0.81",
+    "main": "./lib/logger.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/atmajs/atma-logger.git"

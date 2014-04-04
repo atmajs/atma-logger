@@ -164,16 +164,16 @@ FS_TransportObject = {
 ```
 
 > As this transport is by default async, then on `uncaughtException` e.g. call `flush()` to persist all logs before exit
-    ```javascript
-    process.on('uncaughtException', function(error){
-        logger
-            .error(error)
-            .getTransport()
-            .flush();
-            
-        process.exit(1);
-    });
-    ```
+```javascript
+process.on('uncaughtException', function(error){
+    logger
+        .error(error)
+        .getTransport()
+        .flush();
+        
+    process.exit(1);
+});
+```
 
 ### Color
 ```javascript
