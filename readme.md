@@ -6,7 +6,7 @@ NodeJS Logger
 Features:
 
 - string colors: ascii and html
-- object formatters
+- object formatters _handles circular refs_
 - object color theme
 - `std` and `fs` transports
 - `fs` with `stdout/stderr` interceptors
@@ -31,9 +31,11 @@ $ npm i atma-logger -save
 var logger = require('atma-logger'); /*minified*/
 var logger = require('atma-logger/lib/logger-dev'); /*not minified*/
 
-// Exports to `global` as `logger` key
+// Exports to `global`
 require('atma-logger/lib/global'); /*minified*/
 require('atma-logger/lib/global-dev'); /*not minified*/
+    ...
+    logger.trace(global);
 ```
 
 ### Logger
@@ -142,7 +144,7 @@ STD_TransportObject = {
 ```
 
 ##### File System
-
+Async file-system transport with buffering. 
 ```javascript 
 FS_TransportObject = {
     type: 'fs',
@@ -160,6 +162,18 @@ FS_TransportObject = {
     interceptStd: false
 };
 ```
+
+> As this transport is by default async, then on `uncaughtException` e.g. call `flush()` to persist all logs before exit
+    ```javascript
+    process.on('uncaughtException', function(error){
+        logger
+            .error(error)
+            .getTransport()
+            .flush();
+            
+        process.exit(1);
+    });
+    ```
 
 ### Color
 ```javascript
