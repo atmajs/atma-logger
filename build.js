@@ -6,28 +6,61 @@
 
 
 module.exports = {
-	'settings': {
-		io: {
-			extensions: {
-				js: ['condcomments:read', 'importer:read']
+	
+	//'build project': {
+		'commonjs': {
+			settings: {
+				io: {
+					extensions: {
+						js: ['condcomments:read']
+					}
+				}
+			},
+			action: 'import',
+			files: 'builds/logger.js',
+			output: 'lib/logger-dev.js',
+			defines: {
+				CommonJS: true,
+				Global: false
 			}
-		}
-	},
-	'import': {
-		files: 'builds/**',
-		output: 'lib/'
-	},
+		},
+		
+		'global': {
+			settings: {
+				io: {
+					extensions: {
+						js: ['condcomments:read']
+					}
+				}
+			},
+			action: 'import',
+			files: 'builds/logger.js',
+			output: 'lib/global-dev.js',
+			defines: {
+				CommonJS: true,
+				Global: false
+			}
+		},
+	//},
+	
 	'jshint': {
-		files: ['lib/logger.js'],
+		files: ['lib/logger-dev.js'],
 		jshint: JSHint()
 	},
 	'uglify': {
-		files: 'lib/logger.js'
+		files: [
+			'lib/logger-dev.js',
+			'lib/global-dev.js'
+		],
+		output: [
+			'lib/logger.js',
+			'lib/global.js'
+		]
 	},
 
 	'watch': {
 		files: 'src/**',
-		config: '#[import]'
+		actions: ['commonjs', 'global']
 	},
 	
 	'publish': {
@@ -35,7 +68,7 @@ module.exports = {
 		script: 'tools/publish'
 	},
 
-	'defaults': ['import', 'jshint', 'uglify']
+	'defaults': ['commonjs', 'global', 'jshint', 'uglify']
 };
 
 

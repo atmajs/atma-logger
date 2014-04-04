@@ -2,7 +2,7 @@ var logsDir = new io.Directory('test/transports/mylog/'),
 	Logger;
 
 function initLogger(cfg) {
-	Logger = require('../../lib/logger.js').logger
+	Logger = require('../../lib/logger-dev.js')
 	Logger.cfg(cfg || {
 		color: 'none',
 		logCaller: false,

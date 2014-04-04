@@ -1,30 +1,22 @@
 (function(root, factory){
 	"use strict";
 
-	var _global, _exports;
+	var __global = typeof window === 'undefined'
+		? global
+		: window
+		;
 	
-	if (typeof exports !== 'undefined' && (root === exports || root == null)){
-		// raw nodejs module
-    	_global = _exports = global;
-		
-		if (_exports.logger != null) 
-			_exports = module.exports;
-    }
+	var Logger = factory(__global);
 	
-	if (_global == null) {
-		_global = typeof window === 'undefined'
-			? global
-			: window
-			;
-	}
+	// if CommonJS
+	module.exports = Logger;
+	// endif
 	
-	if (_exports == null) 
-		_exports = root || _global;
+	// if Global
+	__global.logger = Logger;
+	// endif
 	
-	
-	factory(_global, _exports);
-	
-}(this, function(global, exports){
+}(this, function(global){
 	"use strict";
 	
 	// import ../src/vars.js
@@ -33,6 +25,8 @@
 	// import ../src/utils/stack.js
 	// import ../src/utils/date.js
 	// import ../src/utils/message.js
+	// import ../src/utils/cfg.js
+	// import ../src/utils/logger.js
 	// import ../src/color/color.js
 	
 	// import ../src/transport/Transport.js
@@ -40,5 +34,5 @@
 	// import ../src/configurate.js
 	
 	
-	exports.logger = Logger;
+	return Logger;
 }));
