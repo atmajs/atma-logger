@@ -11,6 +11,8 @@ Features:
 - `std` and `fs` transports
 - `fs` with `stdout/stderr` interceptors
 
+----
+
 - [Library](#library)
 - [Logger](#logger)
 - [Config](#config)
@@ -40,7 +42,7 @@ require('atma-logger/lib/global-dev'); /*not minified*/
 // chainable
 
 /*
- * Global scope functions
+ * Logger scope functions
 \*/
 logger
     .log('lorem "%s"', 'ipsum');
@@ -86,14 +88,14 @@ CfgObject = {
 
 #### Log Levels
 
-Logger performs prints only, if current level is smaller than global's level or per instance level. Default level is `50`. 
+Logger performs prints only, if current level is smaller than loggers level or per instance level. Default level is `50`. 
 
 ```javascript
 /*
  * Define the log levels
 \*/
 logger.cfg({
-    // global level
+    // logger level
     level: 64
     // named scope levels
     levels: {
