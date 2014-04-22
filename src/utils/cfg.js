@@ -14,6 +14,10 @@ var cfg_set;
 				Transport.define(value);
 				break;
 			
+			case 'handleExceptions':
+				process_handleExceptions(value);
+				break;
+			
 			case 'color':
 				Color.define(value);
 				/* breakthrough */            

@@ -79,8 +79,13 @@ CfgObject = {
     level: Number,
     levels: Object,
     color: 'none|ascii|html', // @def: ascii
+	
+	// include filename and the linenumber
     logCaller: Boolean, // @def: true
     
+	// flush error and exit the process.
+	handleExceptions: Boolean, // @def, false
+	
     // 'dd-MM hh:mm', date format pattern, @def: null
     logDate: String,
     
@@ -163,17 +168,6 @@ FS_TransportObject = {
 };
 ```
 
-> As this transport is by default async, then on `uncaughtException` e.g. call `flush()` to persist all logs before exit
-```javascript
-process.on('uncaughtException', function(error){
-    logger
-        .error(error)
-        .getTransport()
-        .flush();
-        
-    process.exit(1);
-});
-```
 
 ### Color
 ```javascript
