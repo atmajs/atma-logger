@@ -41,6 +41,8 @@ File.prototype = {
 		data = this.getBuffer_();
 		file_appendAsync(file.path, data, function(error){
 			file.busy = false;
+			if (file.buffer.length > BUFFER_SIZE) 
+				file.flush();
 		});
 	},
 	

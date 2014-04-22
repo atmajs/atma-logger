@@ -3,7 +3,7 @@
     "description": "Logger | Formatter + Color",
     "author": {
         "name": "Alexander Kit",
-        "email": "source.kit@gmail.com"
+        "email": "alex.kit@atmajs.com"
     },
     "version": "0.0.81",
     "main": "./lib/logger.js",
