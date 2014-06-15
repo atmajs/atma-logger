@@ -1,0 +1,39 @@
+	
+UTest({
+	'ascii': function(){
+		Logger.cfg('color', 'ascii');
+		var logs = [
+			[
+				'red<I> Foo'.color,
+				'\u001b[31mI\u001b[0m Foo',
+			],
+			[
+				'I'.red,
+				'\u001b[31mI\u001b[0m',
+			]
+		];
+		
+		logs.forEach((row, i) => eq_(row[0], row[1], 'at ' + i));
+	},
+	'html': function(){
+		Logger.cfg('color', 'html');
+		var logs = [
+			[
+				'red<I>'.color,
+				'<span style="color:red">I</span>',
+			],
+			[
+				'red<bold<I>a>'.color,
+				'<span style="color:red"><span style="font-weight:bold">I</span>a</span>'
+			],
+			[
+				'I'.bg_cyan.red.bold,
+				'<span style="font-weight:bold"><span style="color:red"><span style="background-color:cyan">I</span></span></span>'
+			]
+			
+		];
+		Logger.cfg('color', 'ascii');
+		
+		logs.forEach((row, i) => eq_(row[0], row[1], 'at ' + i));
+	}
+});

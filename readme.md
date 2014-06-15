@@ -60,11 +60,11 @@ logger
  * <String> - scope name (@see `levels` in configuration)
 \*/
 logger(String|Number, String|Number) 
-    .log
-    .warn
-    .error
-    .trace
-    .debug
+    .log(...)
+    .warn(...)
+    .error(...)
+    .trace(...)
+    .debug(...)
     ;
 ```
 
@@ -80,13 +80,15 @@ CfgObject = {
     levels: Object,
     color: 'none|ascii|html', // @def: ascii
 	
-	// include filename and the linenumber
+	// log the filename and the linenumber
     logCaller: Boolean, // @def: true
     
-	// flush error and exit the process.
-	handleExceptions: Boolean, // @def, false
+	// uncaughtExceptions: flush the error and exit the process
+	// @default: false
+	handleExceptions: Boolean,
 	
-    // 'dd-MM hh:mm', date format pattern, @def: null
+    // Date format pattern. e.g: 'dd-MM hh:mm'
+	// @default: ''
     logDate: String,
     
     transport: TransportObject
@@ -156,10 +158,20 @@ FS_TransportObject = {
     
     // defaults
     extension: 'txt', 
-    directory: 'logs', 
-    bufferSize: 64,
-    fileSize: 500 * 1024 * 1024,
+    directory: 'logs',
+	
+	// message COUNT to buffer before write
+	// @default, is NO buffering
+    bufferSize: 0,
+	
+	// in Bytes
+    fileSize: 500 * 1024,
+	
+	// After the filesize is reached its maximum, a new file will be created
+	// This option limits the log files. Old log files will be deleted
     filesCount: 10,
+	
+	// all writes are async, but to switch to sync writes set this option to `true`
     sync: false,
     
     // when set to `true` then all std writes, like - console.log,

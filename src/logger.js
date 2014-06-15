@@ -7,6 +7,9 @@ var Logger = (function(){
         _level: null,
         
 		cfg: function(mix){
+			if (arguments.length === 0) 
+				return _cfg;
+			
 			if (typeof mix === 'string'){
 				if (arguments.length === 1) 
 					return _cfg[mix];

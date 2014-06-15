@@ -8,8 +8,8 @@ var File = function(name, shouldReadStats){
 	
 	this.size = shouldReadStats !== true
 		? 0
-		: file_readSize(this.path);
-	
+		: file_readSize(this.path)
+		;
 };
 
 File.prototype = {
@@ -17,16 +17,16 @@ File.prototype = {
 	errored: false,
 	
 	write: function(message){
-		this.size += message.length;
+		this.size += message.length + newLine.length;
 		this.buffer.push(message);
 		
 		if (this.buffer.length > BUFFER_SIZE) {
 			this[use_SYNC ? 'flushSync' : 'flush']();
 		}
 		
-		if (this.size > FILE_MAXSIZE) 
+		if (this.size >= FILE_MAXSIZE) {
 			flow_nextFile();
-		
+		}
 	},
 	
 	flush: function(){
@@ -39,6 +39,9 @@ File.prototype = {
 		file.busy = true;
 		
 		data = this.getBuffer_();
+		if (data === '') 
+			return;
+		
 		file_appendAsync(file.path, data, function(error){
 			file.busy = false;
 			if (file.buffer.length > BUFFER_SIZE) 
@@ -47,7 +50,11 @@ File.prototype = {
 	},
 	
 	flushSync: function(){
-		file_append(this.path, this.getBuffer_());
+		var data = this.getBuffer_();
+		if (data === '')
+			return;
+		
+		file_append(this.path, data);
 	},
 	
 	getBuffer_: function(){

@@ -1,56 +1,44 @@
-
-include
-	.js('../lib/logger-dev.js::Logger')
-	.resp(function(resp){
-		var Logger = resp.Logger;
+	
+UTest({
+	'interface': function () {
 		
-		UTest({
-		'logger': function(){
-			
-			var log = Logger(90);
-			
-			is_(log, 'Function');
-			is_(log.debug, 'Function');
-			eq_(log._level, 90);
-			
-		},
-		'colors': function(){
-			assert(''.blue);
-			assert(Logger.cfg);
-			
-			Logger.cfg('color', 'html')
-			
-			eq('red<I>'.color, '<span style="color:red">I</span>');
-			
-			eq('red<bold<I>a>'.color, '<span style="color:red"><span style="font-weight:bold">I</span>a</span>');
-			
-			
-			Logger.cfg('color', 'ascii')
-			
-			console.log("show green:", 'green<bold<I>>'.color);
-			console.log("show red:", 'red<bold<I>a green<bold<green text>> normal>'.color);
-			
-			
-		},
+		deepEq_(Object.keys(Logger), [
+			'_name',
+			'_level',
+			'cfg',
+			'color',
+			'formatMessage',
+			'log',
+			'error',
+			'warn',
+			'debug',
+			'trace',
+			'getTransport'
+		]);
 		
-		'format circular json': function(){
-			var a = {
-				letter: 'A',
-				
-				small: [ 'a', 'b', 'c', 5, {time: new Date}],
-				search: /a/g,
-				
-				doSmth: function(){}
-			};
-			
-			a.b = a;
-			
-			
-			var str = Logger.color.formatJSON(a);
-			
-			has_(str, '<circular>')
-		}
-	})
-			
+		var log = Logger(90);
 		
-	})
+		is_(log, 'Function');
+		eq_(log._level, 90);
+		
+	},
+	
+	'format circular json': function(){
+		Logger.cfg('color', 'none');
+		var a = {
+			letter: 'A',
+			
+			small: [ 'a', 'b', 'c', 5, {time: new Date}],
+			search: /a/g,
+			
+			doSmth: function(){}
+		};
+		a.b = a;
+		
+		var str = Logger.color.formatJSON(a);
+		
+		Logger.cfg('color', 'ascii');
+		has_(str, 'b: <circular>', 'has circular');
+		has_(str, /\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/, 'has time');
+	}
+});

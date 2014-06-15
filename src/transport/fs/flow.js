@@ -32,10 +32,13 @@ var flow_initialize,
 			? new File(filename.replace(/\.\w+$/, ''), true)
 			: flow_nextFile()
 			;
+		
+		if (_file.size >= FILE_MAXSIZE) 
+			flow_nextFile();
 			
-		if (files.length > FILE_MAXCOUNT) {
+		if (files.length >= FILE_MAXCOUNT) {
 			files
-				.slice(0, files.length - FILE_MAXCOUNT)
+				.slice(0, files.length - FILE_MAXCOUNT + 1)
 				.forEach(function(filename){
                  
 					file_remove(Path.resolve(_directory, filename));

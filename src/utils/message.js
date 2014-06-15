@@ -43,7 +43,7 @@ var message_format,
 			}
 
 			if (str !== '')
-				str += '  ';
+				str += ' ';
 
 			str += item;
 		}

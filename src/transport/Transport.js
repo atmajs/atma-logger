@@ -4,8 +4,8 @@ var Transport = (function(){
 		
 	
 	// import Std.js
+	// import Stream.js
 	// import fs/transport.js
-	
 	
 	_transport = _transports.std;
 	return {

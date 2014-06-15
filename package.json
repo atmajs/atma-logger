@@ -18,12 +18,23 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "atma-formatter": "latest"
+        "atma-formatter": ">0.8.7",
+        "atma-loader-traceur": ">0.0.0"
     },
     "devDependencies": {
         "atma": "latest"
     },
     "scripts": {
         "test": "node_modules/.bin/atma test"
+    },
+    "atma": {
+        "plugins": [
+            "atma-loader-traceur"
+        ],
+        "settings": {
+            "atma-loader-traceur": {
+                "extensions": [ "test" ]
+            }
+        }
     }
 }

@@ -10,6 +10,14 @@ var ColorHtml = {
 		magenta: 'color:magenta',
 		cyan: 'color:cyan',
 		
+		bg_black: 'background-color:black',
+		bg_red: 'background-color:red',
+		bg_green: 'background-color:green',
+		bg_yellow: 'background-color:yellow',
+		bg_blue: 'background-color:blue',
+		bg_magenta: 'background-color:magenta',
+		bg_cyan: 'background-color:cyan',
+		bg_white: 'background-color:white',
 
 		bold: 'font-weight:bold',
 		italic: 'font-style:italic',

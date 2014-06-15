@@ -11,8 +11,7 @@ var file_append,
 
 	file_readSize = function(path) {
 		try {
-			var x = Fs.lstatSync(path);
-			return x && x.size;
+			return Fs.lstatSync(path).size;
 		} catch (error) {
 			return 0;
 		}
