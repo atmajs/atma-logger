@@ -86,22 +86,19 @@ UTest({
 	
 	
 	'fill files': (function () {
-		
-		function u_initLogger() {
-			initLogger({
-				color: 'none',
-				logCaller: false,
-				logDate: false,
-				transport: {
-					type: 'fs',
-					directory: 'mylog',
-					bufferSize: 0,
-					fileSize: 100,
-					filesCount: 5,
-					sync: true
-				}
-			});
-		}
+		var config = {
+			color: 'none',
+			logCaller: false,
+			logDate: false,
+			transport: {
+				type: 'fs',
+				directory: 'mylog',
+				bufferSize: 0,
+				fileSize: 100,
+				filesCount: 5,
+				sync: true
+			}
+		};
 		function u_fillFile(id){
 			Logger.cfg('color', 'none');
 			var i = 10;
@@ -109,36 +106,32 @@ UTest({
 				logLine(id + '', 10);
 			}
 			
-			//Logger.log('');
 			Logger.cfg('color', 'ascii');
 		}
-		function u_ensureFileCount(expectFiles) {
-			var files = getFiles(),
-				length = files.length
-				;
-			eq_(length, expectFiles);
+		function u_ensureFileCount(files, expectFiles) {
+			eq_(files.length, expectFiles);
 		}
-		function u_ensureLastSize(){
-			var files = getFiles(),
-				length = files.length
-				;
+		function u_ensureLastSize(files){
+			var length = files.length;
 			eq_(getFileSize(files[length - 1]), 100);
+		}
+		function u_ensureNum(files, num){
+			var str = files[files.length - 1].read();
+			has_(str, new RegExp('^' + num));
 		}
 		function u_fillFileAndCheck(num, expect, done) {
 			u_fillFile(num);
 			setTimeout(function(){
-				u_ensureFileCount(expect);
-				u_ensureLastSize();
+				var files = getFiles();
+				u_ensureFileCount(files, expect);
+				u_ensureLastSize(files);
+				u_ensureNum(files, num);
 				done();
-			}, 100);
+			}, 200);
 		}
 		return {
-			'next tick': function(done){
-				setTimeout(done, 10);
-			},
-			'initialize': function(){
-				logsDir.remove();
-				u_initLogger();
+			$before: function(done){
+				teardownLogger(config, done);
 			},
 			'should fill file #1': function(done){
 				u_fillFileAndCheck(1, 1, done);
@@ -156,17 +149,17 @@ UTest({
 				u_fillFileAndCheck(5, 5, done);
 			},
 			'should remove last file for next logging': function(){
-				u_initLogger();
+				initLogger(config);
 			},
 			'should fill file #6': function(done){
 				u_fillFileAndCheck(6, 5, done);
 			},
 			'should fill file #7': function(done){
-				u_initLogger();
+				initLogger(config);
 				u_fillFileAndCheck(7, 5, done);
 			},
 			'should fill file #8': function(done){
-				u_initLogger();
+				initLogger(config);
 				u_fillFileAndCheck(8, 5, done);
 			},
 			'should contains data from #4 - #8': function(){
@@ -281,12 +274,8 @@ UTest({
 		})
     },
 	'async buffer': {
-		'next tick': function(done){
-			setTimeout(done, 10);
-		},
-		'should write to buffer': function(done){
-			logsDir.remove();
-			initLogger({
+		$before: function(done){
+			teardownLogger({
 				color: 'none',
 				logCaller: false,
 				logDate: false,
@@ -298,7 +287,9 @@ UTest({
 					bufferSize: 5,
 					sync: false
 				}
-			});
+			}, done);
+		},
+		'should write to buffer': function(done){
 			
 			logLine('a1', 10);
 			logLine('a2', 10);
@@ -332,12 +323,8 @@ UTest({
 	
 	'async fill': {
 		
-		'next tick': function(done){
-			setTimeout(done, 30);
-		},
-		'should fill file': function(next){
-			logsDir.remove();
-			initLogger({
+		$before: function(done){
+			teardownLogger({
 				color: 'none',
 				logCaller: false,
 				transport: {
@@ -348,7 +335,9 @@ UTest({
 					bufferSize: 5,
 					sync: false
 				}
-			});
+			}, done);
+		},
+		'should fill file': function(next){
 			
 			var i = -1;
 			while (++i < 10240) {
@@ -417,3 +406,18 @@ function logLine(str, chars){
 function color(state){
 	Logger.cfg('color', state ? state: 'none');
 }
+function teardownLogger(cfg, done) {
+	setTimeout(() => {
+		logsDir
+		.removeAsync()
+		.always(() => {
+
+			setTimeout(() => {
+				initLogger(cfg);
+				setTimeout(done, 50);
+			}, 50)
+			
+		})
+	}, 50)
+}
+	

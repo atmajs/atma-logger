@@ -52,9 +52,14 @@ var flow_initialize,
 			_file.flushSync();
 		
 		var d = new Date();
-		_file = new File(d.getTime() + '_' + _format(d, 'dd-MM_hh'));
+		_file = new File(d.getTime()
+				+ '_'
+				+ (switch_++)
+				+ '_'
+				+ _format(d, 'dd-MM_hh'));
 		
 		return _file;
 	};
 	
+	var switch_ = 0;
 }());
