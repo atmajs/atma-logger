@@ -3,11 +3,18 @@ var Transport = (function(){
 		_transport;
 		
 	
-	// import Std.js
-	// import Stream.js
-	// import fs/transport.js
+	// if NodeJS
+		// import Std.js
+		// import Stream.js
+		// import fs/transport.js
+		_transport = _transports.std;
+	// endif
 	
-	_transport = _transports.std;
+	// if Browser
+		// import Console.js
+		_transport = _transports.console;
+	// endif
+	
 	return {
 		
 		define: function(transportCfg){

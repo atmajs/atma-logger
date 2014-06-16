@@ -1,15 +1,14 @@
-NodeJS Logger
+Browser and NodeJS Logger
 ----
 [![Build Status](https://travis-ci.org/atmajs/atma-logger.svg?branch=master)](https://travis-ci.org/atmajs/atma-logger)
 [![NPM version](https://badge.fury.io/js/atma-logger.svg)](http://badge.fury.io/js/atma-logger)
 
 Features:
-
 - string colors: ascii and html
 - object formatters _handles circular refs_
 - object color theme
-- `std` and `fs` transports
-- `fs` with `stdout/stderr` interceptors
+- different and extendable Transports (`std`, `fs`, `stream`, etc)
+- NodeJS: `stdout/stderr` interceptors
 
 ----
 
@@ -18,9 +17,16 @@ Features:
 - [Config](#config)
     - [Log Levels](#log-levels)
     - [Transports](#transports)
-        - [Std](#std)
-        - [File System](#file-system)
-- [Color](#color)
+		- NodeJS
+			- [Std](#std)
+			- [File System](#file-system)
+			- [Stream](#stream)
+		- Browser
+			- [Console](#console)
+			- Http/Ajax _in progress_
+			- DOMNode output _in progress_
+			
+- [Color](#colorize-string)
 
 ### Library
 ```bash
@@ -37,6 +43,14 @@ require('atma-logger/lib/global-dev'); /*not minified*/
     ...
     logger.trace(global);
 ```
+```html
+<!-- Browser -->
+<script src='lib/browser.min.js'></script>
+<script>
+logger.cfg(ConfigurationObject)
+logger.log(...args);
+</script>
+```
 
 ### Logger
 
@@ -47,7 +61,7 @@ require('atma-logger/lib/global-dev'); /*not minified*/
  * Logger scope functions
 \*/
 logger
-    .log('lorem "%s"', 'ipsum');
+    .log('lorem `%s`', 'ipsum');
     .trace(...)
     .debug(...)
     .warn(...)
@@ -80,6 +94,15 @@ CfgObject = {
     levels: Object,
     color: 'none|ascii|html', // @def: ascii
 	
+	/** Format message as a string before the output,
+	  * otherwise raw arguments are passed to the transport
+	  * Features:
+	  *   - printf style
+	  *   - format Arrays and Objects(circular refs are handled)
+	  *   - format Number, Data, RegExp, etc.
+	 \*/
+	formatMessage: true,
+	
 	// log the filename and the linenumber
     logCaller: Boolean, // @def: true
     
@@ -91,7 +114,7 @@ CfgObject = {
 	// @default: ''
     logDate: String,
     
-    transport: TransportObject
+    transport: TransportConfig
 }
 ```
 
@@ -145,7 +168,7 @@ log.debug('baz');
 ##### Std
 Print logs to the console
 ```javascript
-STD_TransportObject = {
+STD_TransportConifg = {
     type: 'std'
 };
 ```
@@ -153,7 +176,7 @@ STD_TransportObject = {
 ##### File System
 Async file-system transport with buffering. 
 ```javascript 
-FS_TransportObject = {
+FS_TransportConfig = {
     type: 'fs',
     
     // defaults
@@ -179,9 +202,24 @@ FS_TransportObject = {
     interceptStd: false
 };
 ```
+##### Stream
+Provide any Writable stream, and all logs are piped to that stream
+```javascript
+Stream_TransportConfig {
+	type: 'stream',
+	stream: IWritableStream
+}
+// e.g
+logger.cfg({
+	transport: {
+		type: 'stream',
+		stream: FooSocket
+	}
+});
+```
 
-
-### Color
+### Colorize string
+HTML and ASCII colors are supports (refer to `color` option).
 ```javascript
 
     'lorem ipsum'
@@ -191,6 +229,15 @@ FS_TransportObject = {
 		.blue
 		.magenta
 		.cyan
+		
+		.bg_black,
+		.bg_red,
+		.bg_green,
+		.bg_yellow,
+		.bg_blue,
+		.bg_magenta,
+		.bg_cyan,
+		.bg_white,
 		
 		.bold
 		.italic

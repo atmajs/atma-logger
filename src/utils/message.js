@@ -4,6 +4,9 @@ var message_format,
 (function() {
 
 	message_prepair = function(args) {
+		if (_cfg.formatMessage === false) 
+			return args;
+		
 		var message = message_format(args);
 		
 		if (_cfg.logCaller !== false) 

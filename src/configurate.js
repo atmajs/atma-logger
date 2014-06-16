@@ -1,4 +1,4 @@
-if (typeof process !== 'udefined') {
+if (typeof process !== 'undefined') {
 	
 	var args = process.argv.slice(2);
 	

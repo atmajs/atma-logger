@@ -8,7 +8,7 @@
 module.exports = {
 	
 	//'build project': {
-		'commonjs': {
+		'node commonjs': {
 			settings: {
 				io: {
 					extensions: {
@@ -21,15 +21,17 @@ module.exports = {
 			output: 'lib/logger-dev.js',
 			defines: {
 				CommonJS: true,
-				Global: false
+				Global: false,
+				NodeJS: true,
+				Browser: false
 			}
 		},
 		
-		'global': {
+		'node global': {
 			settings: {
 				io: {
 					extensions: {
-						js: ['condcomments:read']
+						js: [ 'condcomments:read' ]
 					}
 				}
 			},
@@ -38,7 +40,29 @@ module.exports = {
 			output: 'lib/global-dev.js',
 			defines: {
 				CommonJS: false,
-				Global: true
+				Global: true,
+				NodeJS: true,
+				Browser: false
+			}
+		},
+		
+		'browser global': {
+			settings: {
+				io: {
+					extensions: {
+						js: [ 'condcomments:read' ]
+					}
+				}
+			},
+			action: 'import',
+			files: 'builds/logger.js',
+			output: 'lib/browser.js',
+			defines: {
+				CommonJS: false,
+				Global: true,
+				NodeJS: false,
+				Browser: true
+				
 			}
 		},
 	//},
@@ -50,11 +74,13 @@ module.exports = {
 	'uglify': {
 		files: [
 			'lib/logger-dev.js',
-			'lib/global-dev.js'
+			'lib/global-dev.js',
+			'lib/browser.js'
 		],
 		output: [
 			'lib/logger.js',
-			'lib/global.js'
+			'lib/global.js',
+			'lib/browser.min.js'
 		]
 	},
 
@@ -68,7 +94,13 @@ module.exports = {
 		script: 'tools/publish'
 	},
 
-	'defaults': ['commonjs', 'global', 'jshint', 'uglify']
+	'defaults': [
+		'node commonjs',
+		'node global',
+		'browser global',
+		'jshint',
+		'uglify'
+	]
 };
 
 
