@@ -25,6 +25,7 @@ UTest({
 		logsDir.remove();
 	},
 	$after: function(done){
+		logger.cfg('color', 'ascii');
 		setTimeout(function(){
 			logsDir.remove();
 			done();
@@ -247,6 +248,7 @@ UTest({
         setTimeout(function(){
 			logsDir.remove();
 			initLogger({
+				color: 'none',
 				logCaller: true,
 				logDate: 'yyyy_',
 				transport: {
@@ -285,6 +287,7 @@ UTest({
 		'should write to buffer': function(done){
 			logsDir.remove();
 			initLogger({
+				color: 'none',
 				logCaller: false,
 				logDate: false,
 				transport: {
@@ -335,6 +338,7 @@ UTest({
 		'should fill file': function(next){
 			logsDir.remove();
 			initLogger({
+				color: 'none',
 				logCaller: false,
 				transport: {
 					type: 'fs',
@@ -363,14 +367,21 @@ UTest({
 				next();
 			}, 500);
 		},
-		'should write to next file': function (next) {
-			Logger.log('c');
+		'should write to next file': function (done) {
+			Logger
+				.log('1')
+				.log('2')
+				.log('3')
+				.log('4')
+				.log('5')
+				.log('6')
 			
 			setTimeout(function(){
 				files = getFiles();
 				eq_(files.length, 2);
-			}, 500)
-			next();
+				has_(files[1].read(), /^1\s+2\s+3\s+4\s+5\s+6\s+$/g);
+				done();
+			}, 500);
 		}
 		
 	}
@@ -402,4 +413,7 @@ function logLine(str, chars){
 	var count = chars - eol.length;
 	while (str.length < count) str += ' ';
 	Logger.log(str);
+}
+function color(state){
+	Logger.cfg('color', state ? state: 'none');
 }
