@@ -27,13 +27,12 @@
 	// import ../src/utils/message.js
 	// import ../src/utils/process.js
 	// import ../src/utils/cfg.js
-	// import ../src/utils/logger.js
+	// import ../src/utils/level.js
 	// import ../src/color/color.js
 	
 	// import ../src/transport/Transport.js
-	// import ../src/logger.js
+	// import ../src/logger/Logger.js
+	
 	// import ../src/configurate.js
-	
-	
 	return Logger;
 }));

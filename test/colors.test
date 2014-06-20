@@ -23,12 +23,20 @@ UTest({
 				'<span style="color:red">I</span>',
 			],
 			[
-				'red<bold<I>a>'.color,
-				'<span style="color:red"><span style="font-weight:bold">I</span>a</span>'
+				'<div>red<bold<I>a>'.color,
+				'&lt;div&gt;<span style="color:red"><span style="font-weight:bold">I</span>a</span>'
 			],
 			[
-				'I'.bg_cyan.red.bold,
-				'<span style="font-weight:bold"><span style="color:red"><span style="background-color:cyan">I</span></span></span>'
+				'<I'.bg_cyan.red.bold,
+				'<span style="font-weight:bold"><span style="color:red"><span style="background-color:cyan">&lt;I</span></span></span>'
+			],
+			[
+				'<some>'.italic,
+				'<span style="font-style:italic">&lt;some&gt;</span>'
+			],
+			[
+				'italic<<some>>'.color,
+				'<span style="font-style:italic">&lt;some&gt;</span>'
 			]
 			
 		];

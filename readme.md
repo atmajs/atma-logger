@@ -14,8 +14,9 @@ Features:
 
 - [Library](#library)
 - [Logger](#logger)
-- [Config](#config)
+- [Config](#configuration)
     - [Log Levels](#log-levels)
+	- [Log Scopes](#log-scopes)
     - [Transports](#transports)
 		- NodeJS
 			- [Std](#std)
@@ -55,44 +56,69 @@ logger.log(...args);
 ### Logger
 
 ```javascript
-// chainable
+Logger = Function
+	// if level is greater than current global level `EmptyLogger` is returned
+	- function(level):Logger | EmptyLogger
+	// is for assertion logs
+	- function(Boolean):Logger |EmptyLogger
+	
+Logger __static__ AND __proto__ {
+	// Logger functions. They all have different default log levels.
+	//   Global default level is level_LOG
+	// accept any arguments
+	// returns self
+	log:   function(...args):Self
+	warn:  function(...args):Self
+	error: function(...args):Self
+	trace: function(...args):Self
+	debug: function(...args):Self
+	
+	// Creates scoped Logger
+	// - name: is also printed
+	// - level: custom log level for this scope.
+	//    Caution: You can overwrite this with configuration
+	// returns Log function with Logger in static
+	
+	create: function(name:String [,? level:Number]):Function<Logger>
+	
+	cfg : Function
+		- function(key:String, value:Any):Self
+		- function(CfgObject:Object):Self
+		- function(key:String):Any /*value*/
+	
+	// const
+	level_ERROR: 0
+	level_WARN:  25
+	level_LOG:   50
+	level_DEBUG: 75
+	level_TRACE: 100
+}
+```
+Usage examples:
+```javascript
+logger.log('Global object:', global);
 
-/*
- * Logger scope functions
-\*/
-logger
-    .log('lorem `%s`', 'ipsum');
-    .trace(...)
-    .debug(...)
-    .warn(...)
-    .error(...)
-    ;
+var log1 = logger.create('foo');
+log1('Hello'); //> foo Hello
 
-/*
- * Instance scope functions
- * <Number> - log level (redefines log level) (@see functions log level)
- * <String> - scope name (@see `levels` in configuration)
-\*/
-logger(String|Number, String|Number) 
-    .log(...)
-    .warn(...)
-    .error(...)
-    .trace(...)
-    .debug(...)
-    ;
+var log2 = log1.create('baz');
+log2('Hello'); //> foo.baz Hello
+log2.warn('Hello'); //> foo.baz Hello
 ```
 
 
-### Config
+### Configuration
 
 ```javascript
-logger.cfg(key, value);
-logger.cfg(CfgObject); // {key: value, ...}
-
-CfgObject = {
-    level: Number,
-    levels: Object,
-    color: 'none|ascii|html', // @def: ascii
+CfgObject {
+	// global log level, default is level_LOG === 50
+    level: Number
+	
+	// override log levels for scoped loggers
+    levels: ScopeLevels<Object>
+	
+	// @default: NodeJS: ascii, Browser: none
+    color: 'none|ascii|html'
 	
 	/** Format message as a string before the output,
 	  * otherwise raw arguments are passed to the transport
@@ -104,7 +130,8 @@ CfgObject = {
 	formatMessage: true,
 	
 	// log the filename and the linenumber
-    logCaller: Boolean, // @def: true
+	// @default: true
+    logCaller: Boolean
     
 	// uncaughtExceptions: flush the error and exit the process
 	// @default: false
@@ -112,7 +139,7 @@ CfgObject = {
 	
     // Date format pattern. e.g: 'dd-MM hh:mm'
 	// @default: ''
-    logDate: String,
+    logDate: String
     
     transport: TransportConfig
 }
@@ -120,45 +147,72 @@ CfgObject = {
 
 #### Log Levels
 
-Logger performs prints only, if current level is smaller than loggers level or per instance level. Default level is `50`. 
+Logger performs prints only, if current level is smaller than loggers level or per instance(scope) level.
+Default level is `level_LOG === 50`, so `logger.trace(something)` want return 
 
 ```javascript
-/*
- * Define the log levels
-\*/
 logger.cfg({
-    // logger level
-    level: 64
-    // named scope levels
-    levels: {
-        'userService': 100
-    }
+	// override global level
+	level: Number,
+	
+	// extends current scope levels
+	levels: ScopeLevels<Object>
 })
+ScopeLevels {
+	// strict scoped level
+	'scope': Number,
+	
+	// all sub scopes
+	'scope.*': Number
+	
+	// or event deeper
+	'scope.foo.*'
+	
+}
+```
+
+Example:
+```javascript
+/*
+ * Global levels
+\*/
+
+// predefined
+logger.debug('foo') //> does nothing
+logger.cfg({ level: logger.level_DEBUG /*75*/ })
+logger.trace('foo') //> prints foo
+
+// custom
+logger(90).log('foo') //> does nothing, as current level is DEBUG
+logger.cfg({ level: 90 });
+logger(90).log('foo') //> prints foo
+
+logger.cfg({ level: -1 });
+// event errors wont be printed
+logger.error('foo') //> does nothing
 
 /*
- * Functions required log level
+ * Scoped instance
 \*/
-.trace(...) -> level_TRACE = 100
-.debug(...) -> level_DEBUG = 75
-.log  (...) -> level_LOG = 50
-.warn (...) -> level_WARN = 25
-.error(...) -> level_ERROR = 0
+var userServiceLogger = logger('userService', 25);
 
-/*
- * Instance loglevel redefines the functions one
-\*/
-logger(30).log().error() ...
-// log level minimum `30` is required
+// prints nothing, as level_LOG === 50 is required
+userServiceLogger('baz') //same as userServiceLogger.log('baz');
 
+// Turn `userService` logging via configuration
+logger.cfg({
+	levels: {
+		// enable logs
+		'userService': 50,
+		
+		// enable traces
+		'userService.patch': 100
+	}
+});
+userServiceLogger('baz') // prints baz
 
-/*
- * Named scope instance
-\*/
-var log = logger('userService');
-
-// prints
-log('baz') //same as log.log('baz');
-log.debug('baz');
+var userPatcherLogger = userServiceLogger.create('patch');
+userPatcherLogger.trace(user) // prints user object
 ```
 
 

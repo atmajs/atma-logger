@@ -13,6 +13,8 @@ module.exports = {
 						write: buf.push.bind(buf),
 					};
 					Logger.cfg({
+						logData: false,
+						logCaller: false,
 						transport: {
 							type: 'stream',
 							stream: LogStream

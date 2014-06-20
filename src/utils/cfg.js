@@ -8,7 +8,9 @@ var cfg_set;
 				_level = value;
 				break;
 			case 'levels':
-				obj_extend(_levels, value);
+				for (var scope in value){
+					level_scope_Set(scope, value[scope]);
+				}
 				break;
 			case 'transport':
 				Transport.define(value);

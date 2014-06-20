@@ -86,7 +86,7 @@ module.exports = {
 
 	'watch': {
 		files: 'src/**',
-		actions: ['commonjs', 'global']
+		actions: ['node commonjs', 'node global', 'browser global']
 	},
 	
 	'publish': {

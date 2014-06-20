@@ -33,7 +33,7 @@ UTest({
 		has_(str, '<span style="color:yellow">A</span>')
 		has_(str, ': [');
 		has_(str, /\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/, 'has time');
-		has_(str, '<function>');
+		has_(str, '&lt;function&gt;');
 	},
 	'should support circular json': function(){
 		Logger.cfg('color', 'none');

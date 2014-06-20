@@ -62,8 +62,7 @@ File.prototype = {
 			return '';
 		
 		var data = this.buffer.join(newLine)+ newLine;
-		
-        this.buffer.length = 0;
+		this.buffer.length = 0;
 		return data;
 	}
 };

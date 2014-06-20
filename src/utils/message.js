@@ -3,11 +3,15 @@ var message_format,
 
 (function() {
 
-	message_prepair = function(args) {
+	message_prepair = function(args, instance) {
 		if (_cfg.formatMessage === false) 
 			return args;
 		
 		var message = message_format(args);
+		
+		if (instance._name != null) {
+			message = instance._name.color + ' ' + message;
+		}
 		
 		if (_cfg.logCaller !== false) 
 			message += stack_formatCaller(' (F:L)', 5);
@@ -35,6 +39,9 @@ var message_format,
 		for (var i = 0, x, imax = args.length; i < imax; i++) {
 			x = args[i];
 
+			if (x instanceof String) 
+				x = String(x);
+			
 			item = typeof x === 'string'
 				? x
 				: Color.formatJSON(x)

@@ -34,10 +34,18 @@ var ColorHtml;
 				+ '">';
 			
 			return str;
+		},
+		decorator: function(str){
+			return str_htmlEncode(str)
 		}
 	};
 	
-	var str_htmlEncode = (function() {
+	var str_htmlEncode;
+	(function() {
+		str_htmlEncode = function(html) {
+			return html.replace(/[&"'\<\>\/]/g, replaceEntity);
+		};
+		
 		var map = {
 			'&': '&amp;',
 			'<': '&lt;',
@@ -49,10 +57,5 @@ var ColorHtml;
 		function replaceEntity(chr) {
 			return map[chr];
 		}
-		function str_htmlEncode(html) {
-			return html.replace(/[&"'\<\>\/]/g, replaceEntity);
-		}
-		
-		return str_htmlEncode;
 	}());
 }());

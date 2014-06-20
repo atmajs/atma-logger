@@ -3,8 +3,9 @@ var logsDir = new io.Directory('test/transports/mylog/'),
 	file, files;
 
 function initLogger(cfg) {
-	Logger = require('../../lib/logger-dev.js')
+	Logger = require('../../lib/logger-dev.js');
 	Logger.cfg(cfg || {
+		color: 'none',
 		logCaller: false,
 		logDate: 'yyyy_',
 		transport: {
@@ -205,7 +206,6 @@ UTest({
             has_(html, 'color:green');
             has_(html, 'color:cyan');
             has_(html, '<br/>');
-            
             done();
         })
 	},
