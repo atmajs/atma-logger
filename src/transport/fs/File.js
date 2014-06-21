@@ -13,50 +13,30 @@ var File = function(name, shouldReadStats){
 };
 
 File.prototype = {
+	get newLine () {
+		return newLine
+	},
 	busy: false,
 	errored: false,
-	
+	listeners: [],
 	write: function(message){
 		this.size += message.length + newLine.length;
 		this.buffer.push(message);
 		
 		if (this.buffer.length > BUFFER_SIZE) {
-			this[use_SYNC ? 'flushSync' : 'flush']();
+			this[use_SYNC ? 'flush' : 'flushAsync']();
 		}
 		
 		if (this.size >= FILE_MAXSIZE) {
 			flow_nextFile();
 		}
 	},
-	
-	flush: function(){
-		var file = this,
-			data;
-		
-		if (file.busy)
-			return;
-		
-		file.busy = true;
-		
-		data = this.getBuffer_();
-		if (data === '') 
-			return;
-		
-		file_appendAsync(file.path, data, function(error){
-			file.busy = false;
-			if (file.buffer.length > BUFFER_SIZE) 
-				file.flush();
-		});
+	flushAsync: function(cb){
+		Buffered.flushAsync(this, BUFFER_SIZE, File_writeAsync, cb)
 	},
-	
-	flushSync: function(){
-		var data = this.getBuffer_();
-		if (data === '')
-			return;
-		
-		file_append(this.path, data);
+	flush: function(cb){
+		Buffered.flush(this, File_write, cb);
 	},
-	
 	getBuffer_: function(){
 		if (this.buffer.length === 0) 
 			return '';
@@ -66,3 +46,10 @@ File.prototype = {
 		return data;
 	}
 };
+
+function File_writeAsync(self, data, cb){
+	file_appendAsync(self.path, data, cb);
+}
+function File_write(self, data){
+	file_append(self.path, data);
+}

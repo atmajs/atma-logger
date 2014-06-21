@@ -5,8 +5,8 @@ Browser and NodeJS Logger
 
 Features:
 - string colors: ascii and html
-- object formatters _handles circular refs_
-- object color theme
+	- object formatters _handles circular refs_
+	- object color theme
 - different and extendable Transports (`std`, `fs`, `stream`, etc)
 - NodeJS: `stdout/stderr` interceptors
 
@@ -21,6 +21,7 @@ Features:
 		- NodeJS
 			- [Std](#std)
 			- [File System](#file-system)
+				- [Example](#fs-example)
 			- [Stream](#stream)
 		- Browser
 			- [Console](#console)
@@ -140,6 +141,12 @@ CfgObject {
     // Date format pattern. e.g: 'dd-MM hh:mm'
 	// @default: ''
     logDate: String
+	
+	// Define any custom function,
+	// which returns some string, that should be prepended to the message
+	// Can be used to add ANY info to the message, 	
+	// @default: null
+	logMeta: Function,
     
     transport: TransportConfig
 }
@@ -148,7 +155,7 @@ CfgObject {
 #### Log Levels
 
 Logger performs prints only, if current level is smaller than loggers level or per instance(scope) level.
-Default level is `level_LOG === 50`, so `logger.trace(something)` want return 
+Default level is `level_LOG === 50`, so `logger.trace(something)` will do nothing.
 
 ```javascript
 logger.cfg({
@@ -160,14 +167,16 @@ logger.cfg({
 })
 ScopeLevels {
 	// strict scoped level
-	'scope': Number,
+	'scopeName': Number,
 	
-	// all sub scopes
-	'scope.*': Number
+	// strict for sub scope
+	'baz.qux': Number,
 	
-	// or event deeper
-	'scope.foo.*'
+	// self and all sub scopes
+	'scopeName.*': Number
 	
+	// or even deeper
+	'scopeName.foo.*': Number
 }
 ```
 
@@ -180,26 +189,28 @@ Example:
 // predefined
 logger.debug('foo') //> does nothing
 logger.cfg({ level: logger.level_DEBUG /*75*/ })
-logger.trace('foo') //> prints foo
+logger.debug('foo') //> prints foo
 
 // custom
-logger(90).log('foo') //> does nothing, as current level is DEBUG
+logger(90).log('foo') //> does nothing, as `90` is greater then level_DEBUG with `75`
 logger.cfg({ level: 90 });
 logger(90).log('foo') //> prints foo
 
 logger.cfg({ level: -1 });
-// event errors wont be printed
+// even errors wont be printed
 logger.error('foo') //> does nothing
+
 
 /*
  * Scoped instance
 \*/
+
 var userServiceLogger = logger('userService', 25);
 
 // prints nothing, as level_LOG === 50 is required
 userServiceLogger('baz') //same as userServiceLogger.log('baz');
 
-// Turn `userService` logging via configuration
+// Turn `userService` logging on via configuration
 logger.cfg({
 	levels: {
 		// enable logs
@@ -235,7 +246,7 @@ FS_TransportConfig = {
     
     // defaults
     extension: 'txt', 
-    directory: 'logs',
+    directory: 'logs/',
 	
 	// message COUNT to buffer before write
 	// @default, is NO buffering
@@ -255,6 +266,26 @@ FS_TransportConfig = {
     // will be also written to the file system.
     interceptStd: false
 };
+```
+###### FS Example
+```javascript
+logger.cfg({
+	logCaller: true,
+	logDate: 'hh:mm',
+	transport: {
+		type: 'fs',
+		interceptStd: true
+	}
+});
+logger.log('Hello');
+
+// will be also catched and written to the file
+console.log('World')
+
+// Now go to the `logs` directory in the current working directory, and see the output:
+// something like:
+'08:59 Hello (at main.js:10)'
+'08:59 World (at main.js:13)'
 ```
 ##### Stream
 Provide any Writable stream, and all logs are piped to that stream
@@ -276,7 +307,7 @@ logger.cfg({
 HTML and ASCII colors are supports (refer to `color` option).
 ```javascript
 
-    'lorem ipsum'
+    String.prototype
         .red
 		.green
 		.yellow

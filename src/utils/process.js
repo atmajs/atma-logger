@@ -3,12 +3,17 @@ var process_handleExceptions;
 (function(){
 	
 	process_handleExceptions = function(state){
-		process
-			.removeListener('uncaughtException', onException);
-			
-		if (state !== false) 
-			process.on('uncaughtException', onException);
-			
+		// if NodeJS
+			process
+				.removeListener('uncaughtException', onException);
+				
+			if (state !== false) 
+				process.on('uncaughtException', onException);
+		// endif
+		
+		// if Browser
+			window.onerror = onException;
+		// endif
 	};
 	
 	
@@ -19,9 +24,22 @@ var process_handleExceptions;
 			.getTransport()
 			;
 		
-		if (Transport && Transport.flush) 
-			Transport.flush();
-		
-		process.exit(1);
+		if (Transport != null) {
+			
+			if (Transport.flush) {
+				Transport.flush(exit);
+				return;
+			}
+			if (Transport.flushAsync) {
+				Transport.flushAsync(exit);
+				return;
+			}
+		}
+		exit();
+	}
+	function exit() {
+		// if NodeJS
+			process.exit(1);
+		// endif
 	}
 }());

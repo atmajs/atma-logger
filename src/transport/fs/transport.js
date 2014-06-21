@@ -4,11 +4,6 @@ _transports.fs = function(){
 		Fs = require('fs')
 		;
 	
-	var _directory,
-		_file,
-		_extension
-		;
-		
 	// import vars.js
 	// import utils/file.js
 	// import utils/dir.js
@@ -16,6 +11,12 @@ _transports.fs = function(){
 	// import File.js
 	// import flow.js
 	// import exception.js
+	
+	
+	var _directory = path_DIR,
+		_extension = path_Ext,
+		_file
+		;
 	
 	var FsTransport = {
 		write: function(message, level){
@@ -25,8 +26,11 @@ _transports.fs = function(){
 			_file.write(message);
 		},
 		
-		flush: function(){
-			_file.flushSync();
+		flush: function(cb){
+			_file.flush(cb);
+		},
+		flushAsync: function(){
+			_file.flushAsync(cb);
 		},
 		
 		/*
@@ -59,7 +63,9 @@ _transports.fs = function(){
         
         interceptStd: function(state){
             std_intercept(state);
-        }
+        },
+		
+		exception: exception_
 	};
 	
 	return FsTransport;

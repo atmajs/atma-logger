@@ -27,7 +27,9 @@ var _cfg = {
 		formatMessage: true,
 		logCaller: true,
 		logDate: false,
-		color: 'ascii'
+		logMeta: null,
+		color: 'ascii',
+		handleExceptions: false
 	},
 	_level = level_LOG,
 	_levels = {}

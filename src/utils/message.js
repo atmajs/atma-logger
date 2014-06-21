@@ -4,8 +4,12 @@ var message_format,
 (function() {
 
 	message_prepair = function(args, instance) {
-		if (_cfg.formatMessage === false) 
+		if (_cfg.formatMessage === false) {
+			if (_cfg.logMeta)
+				args.unshift(_cfg.logMeta(args));
+			
 			return args;
+		}
 		
 		var message = message_format(args);
 		
@@ -15,6 +19,9 @@ var message_format,
 		
 		if (_cfg.logCaller !== false) 
 			message += stack_formatCaller(' (F:L)', 5);
+		
+		if (typeof _cfg.logMeta === 'function') 
+			message = _cfg.logMeta(args) + ' ' + message;
 		
 		if (_cfg.logDate !== false) {
 			message = date_formatForMessage(_cfg.logDate)

@@ -25,8 +25,12 @@ var cfg_set;
 				/* breakthrough */            
 			case 'logCaller':
 			case 'logDate':
-			default:
+			case 'formatMessage':
+			case 'meta':
 				_cfg[key] = value;
+				break;
+			default:
+				console.error('Logger: unknown configuration', key);
 				break;
 		}
 	}

@@ -49,7 +49,7 @@ var flow_initialize,
 	
 	flow_nextFile = function(){
 		if (_file != null)
-			_file.flushSync();
+			_file.flush();
 		
 		var d = new Date();
 		_file = new File(d.getTime()
