@@ -29,7 +29,7 @@ _transports.fs = function(){
 		flush: function(cb){
 			_file.flush(cb);
 		},
-		flushAsync: function(){
+		flushAsync: function(cb){
 			_file.flushAsync(cb);
 		},
 		
