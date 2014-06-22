@@ -7,7 +7,12 @@ Features:
 - string colors: ascii and html
 	- object formatters _handles circular refs_
 	- object color theme
-- different and extendable Transports (`std`, `fs`, `stream`, etc)
+- different and extendable Transports
+	- [Std](#std)
+	- [Fs](#file-system)
+	- [Http](#http), e.g. (Loggly)(https://loggly.com) endpoints
+	- [Stream](#stream)
+	
 - NodeJS: `stdout/stderr` interceptors
 
 ----
@@ -231,7 +236,7 @@ userPatcherLogger.trace(user) // prints user object
 #### Transports
 
 ##### Std
-Print logs to the console
+`NodeJS default`. Print logs to the console
 ```javascript
 STD_TransportConifg = {
     type: 'std'
@@ -287,6 +292,36 @@ console.log('World')
 '08:59 Hello (at main.js:10)'
 '08:59 World (at main.js:13)'
 ```
+
+##### Http
+Write logs to http endpoint,
+```
+Http_TransportConfig {
+	type: 'http',
+	// Upload URL
+	url: 'URL',
+	
+	// Message COUNT to buffer before upload
+	bufferSize: 0,
+	
+	// default:
+	method: 'POST'
+	
+	// default: 
+	headers: { 'Content-Type': 'text/plain' }
+}
+
+// Browser: There is image technique to upload logs to the cross-origin endpoint.
+// Logger will automatically match the image extension from url, and will use this technique instead of `XMLHttpRequest`
+// e.g.
+Logger.cfg({
+	transport: {
+		type: 'http',
+		url: 'http://logs-01.loggly.com/bulk/token.gif?PLAINTEXT='
+	}
+})
+```
+
 ##### Stream
 Provide any Writable stream, and all logs are piped to that stream
 ```javascript

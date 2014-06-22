@@ -3,6 +3,7 @@ var Transport = (function(){
 		_transport;
 		
 	// import ./helper/Buffered.js
+	// import ./http/transport.js
 	
 	// if NodeJS
 		// import ./Std.js
@@ -19,10 +20,12 @@ var Transport = (function(){
 	return {
 		
 		define: function(transportCfg){
-			
 			var type = transportCfg.type;
 			
 			_transport = _transports[type];
+			if (_transport == null) 
+				throw Error('Transport type is not supported `' + type + '`');
+			
 			
 			if (typeof _transport === 'function') {
 				// initialize
