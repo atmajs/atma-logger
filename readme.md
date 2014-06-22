@@ -10,7 +10,7 @@ Features:
 - different and extendable Transports
 	- [Std](#std)
 	- [Fs](#file-system)
-	- [Http](#http), e.g. (Loggly)(https://loggly.com) endpoints
+	- [Http](#http), e.g. [Loggly](https://loggly.com) endpoints
 	- [Stream](#stream)
 	
 - NodeJS: `stdout/stderr` interceptors
@@ -48,7 +48,7 @@ var logger = require('atma-logger/lib/logger-dev'); /*not minified*/
 require('atma-logger/lib/global'); /*minified*/
 require('atma-logger/lib/global-dev'); /*not minified*/
     ...
-    logger.trace(global);
+    logger.log(global);
 ```
 ```html
 <!-- Browser -->
