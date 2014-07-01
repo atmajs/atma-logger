@@ -26,7 +26,7 @@ var level_scope_Set,
 		};
 		
 	function getParent(scope){
-		var i = scope.lastIndexOf('.')
+		var i = scope.lastIndexOf('.');
 		if (i === -1) 
 			return _default;
 		
@@ -38,7 +38,7 @@ var level_scope_Set,
 		return getParent(scope);
 	}
 	function insert(scope, level) {
-		var any = /\.\*$/.test(scope)
+		var any = /\.\*$/.test(scope);
 		if (any) 
 			scope = scope.slice(0, -2);
 		

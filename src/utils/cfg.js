@@ -22,7 +22,7 @@ var cfg_set;
 			
 			case 'color':
 				Color.define(value);
-				/* breakthrough */            
+				/*fall through*/            
 			case 'logCaller':
 			case 'logDate':
 			case 'formatMessage':
@@ -33,6 +33,6 @@ var cfg_set;
 				console.error('Logger: unknown configuration', key);
 				break;
 		}
-	}
+	};
 	
 }());

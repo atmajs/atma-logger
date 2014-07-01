@@ -36,14 +36,14 @@ var ColorHtml;
 			return str;
 		},
 		decorator: function(str){
-			return str_htmlEncode(str)
+			return str_htmlEncode(str);
 		}
 	};
 	
 	var str_htmlEncode;
 	(function() {
 		str_htmlEncode = function(html) {
-			return html.replace(/[&"'\<\>\/]/g, replaceEntity);
+			return html.replace(/[&"'<>\/]/g, replaceEntity);
 		};
 		
 		var map = {

@@ -27,7 +27,7 @@ var Logger;
 		}
 		
 		return LoggerEmptyProto;
-	}
+	};
 	Logger.prototype = LoggerProto;
 	
     obj_extend(Logger, LoggerProto);

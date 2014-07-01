@@ -65,6 +65,6 @@ var message_format,
 			str += item;
 		}
 		return str;
-	}
+	};
 
 }());

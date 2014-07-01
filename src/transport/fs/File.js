@@ -14,7 +14,7 @@ var File = function(name, shouldReadStats){
 
 File.prototype = {
 	get newLine () {
-		return newLine
+		return newLine;
 	},
 	busy: false,
 	errored: false,
@@ -32,7 +32,7 @@ File.prototype = {
 		}
 	},
 	flushAsync: function(cb){
-		Buffered.flushAsync(this, BUFFER_SIZE, File_writeAsync, cb)
+		Buffered.flushAsync(this, BUFFER_SIZE, File_writeAsync, cb);
 	},
 	flush: function(cb){
 		Buffered.flush(this, File_write, cb);

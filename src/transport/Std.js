@@ -11,5 +11,5 @@ _transports.std = (function(){
 		
 		cfg: function(){},
         std: true
-	}
+	};
 }());

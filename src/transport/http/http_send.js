@@ -57,14 +57,6 @@ var http_send;
 			cb = null;
 		}
 	}
-	function encode(str) {
-		try {
-			return encodeURIComponent(data)
-		} catch(error){
-			Logger.error('Logger encode error', error);
-			return null;
-		}
-	}
 	// endif
 	
 	// if NodeJS
@@ -83,7 +75,7 @@ var http_send;
 		if (method === 'GET') {
 			data = encode(data);
 			if (data == null) {
-				cb && cb('Encode failed');
+				if (cb) cb('Encode failed');
 				return;
 			}
 			
@@ -107,7 +99,7 @@ var http_send;
 					msg += String(chunk);
 				})
 				.on('end', function(){
-					cb && cb(msg, res);
+					if (cb) cb(msg, res);
 				});
 		});
 		if (data != null) {
@@ -117,4 +109,13 @@ var http_send;
 		req.end();
 	}
 	// endif
+	
+	function encode(str) {
+		try {
+			return encodeURIComponent(str);
+		} catch(error){
+			Logger.error('Logger encode error', error);
+			return null;
+		}
+	}
 }());

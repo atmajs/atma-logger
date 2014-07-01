@@ -33,7 +33,7 @@ var file_append,
 		} catch (error) {
 			exception_(error);
 		}
-	}
+	};
 
 	file_appendAsync = function(path, str, callback) {
 		if (!str) {
@@ -71,5 +71,5 @@ var file_append,
 		} catch (error) {
 			exception_(error);
 		}
-	}
+	};
 }());

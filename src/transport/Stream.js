@@ -10,12 +10,12 @@ _transports.stream = (function(){
 		cfg: function(config){
 			var stream = config.stream;
 			if (stream == null) 
-				throw Error('Transport Configuration: No `stream` property')
+				throw Error('Transport Configuration: No `stream` property');
 			
 			if (stream.write == null) 
 				throw Error('Transport Configuration: Invalid stream object');
 			
 			_stream = stream;
 		}
-	}
+	};
 }());

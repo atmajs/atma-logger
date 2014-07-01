@@ -8,14 +8,14 @@
 		x;
 	
 	while ( ++i < imax ) {
-		x = args[i].replace(/^\-+/,'')
+		x = args[i].replace(/^\-+/,'');
 			
 		switch (x) {
 			case 'no-color':
 				Logger.cfg('color', 'none');
 				break;
 			case 'level':
-				var level = getLevel('level')
+				var level = getLevel('level');
 				if (level == null) 
 					break;
 				

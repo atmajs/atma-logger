@@ -117,7 +117,7 @@ var Color;
 	var painter;
 	(function(){
 		painter = function(str, ColorData) {
-			prepairColor(ColorData)
+			prepairColor(ColorData);
 			ColorData.rgx_search.lastIndex = 0;
 			
 			var match,
@@ -167,7 +167,7 @@ var Color;
 				if (doRenew) 
 					stack.push({end: end, key: key});
 					
-				ColorData.rgx_search.lastIndex = end + 1//index + head.length;
+				ColorData.rgx_search.lastIndex = end + 1;
 			}
 			
 			if (last < str.length) {
@@ -204,7 +204,7 @@ var Color;
 		function stack_renew(stack, index, ColorData) {
 			var str = '',
 				imax = stack.length,
-				i = -1;
+				i = -1, x;
 			while ( ++i < imax ){
 				x = stack[i];
 				
@@ -226,5 +226,5 @@ var Color;
 			}
 			return ColorData;
 		}
-	}())
+	}());
 }());

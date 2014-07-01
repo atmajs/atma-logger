@@ -4,8 +4,8 @@ var std_intercept;
 
 	var orig = {};
 	
-	saveOriginals(process.stdout, 'stdout')
-	saveOriginals(process.stderr, 'stderr')
+	saveOriginals(process.stdout, 'stdout');
+	saveOriginals(process.stderr, 'stderr');
 	
 	std_intercept = function(state){
 		var fn = state !== false
@@ -44,6 +44,6 @@ var std_intercept;
 			
 			FsTransport.write(data);
 		};
-	};
+	}
 	
 }());

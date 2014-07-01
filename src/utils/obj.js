@@ -201,7 +201,7 @@ var obj_typeof,
 						
 						
 						if (str === '{') 
-							str += '\n'
+							str += '\n';
 						
 						tuple[0] = key;
 						tuple[1] = obj[key];

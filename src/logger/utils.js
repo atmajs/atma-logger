@@ -17,7 +17,7 @@ var logger_canWrite,
 		}
 		
 		if (instance._level != null) 
-			logLevel = instance._level
+			logLevel = instance._level;
 		
 		if (logLevel <= globalLevel) 
 			return true;
@@ -46,7 +46,4 @@ var logger_canWrite,
 		_scope: null
 	};
 	
-	function getLevel(name) {
-		
-	}
 }());

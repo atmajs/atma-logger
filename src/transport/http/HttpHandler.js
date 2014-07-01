@@ -15,7 +15,7 @@ var HttpHandler;
 		},
 		
 		flushAsync: function(cb){
-			Buffered.flushAsync(this, BUFFER_SIZE, Http_writeAsync, cb)
+			Buffered.flushAsync(this, BUFFER_SIZE, Http_writeAsync, cb);
 		},
 	};
 	
@@ -24,4 +24,4 @@ var HttpHandler;
 	function Http_writeAsync(handler, data, cb){
 		http_send(data, cb);
 	}
-}())
+}());

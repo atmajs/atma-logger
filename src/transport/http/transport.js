@@ -33,4 +33,4 @@ _transports.http = function(){
 			// endif
 		}
 	};
-}
+};

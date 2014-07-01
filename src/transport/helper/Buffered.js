@@ -13,7 +13,8 @@ var Buffered;
 			
 			var data = joinBuffer(writer);
 			if (data === '') {
-				cb && cb();
+				if (cb)
+					cb();
 				return;
 			}
 			
@@ -35,7 +36,8 @@ var Buffered;
 				return;
 			}
 			flushBuffer(writer, write);
-			cb && cb();
+			if (cb) 
+				cb();
 		}
 	};
 	
