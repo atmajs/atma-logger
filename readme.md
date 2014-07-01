@@ -8,8 +8,8 @@ Features:
 	- object formatters _handles circular refs_
 	- object color theme
 - different and extendable Transports
-	- [Std](#std)
-	- [Fs](#file-system)
+	- [Std Console](#std)
+	- [File](#file-system)
 	- [Http](#http), e.g. [Loggly](https://loggly.com) endpoints
 	- [Stream](#stream)
 	
@@ -17,7 +17,7 @@ Features:
 
 ----
 
-- [Library](#library)
+- [Get started](#get-started)
 - [Logger](#logger)
 - [Config](#configuration)
     - [Log Levels](#log-levels)
@@ -34,26 +34,62 @@ Features:
 			- DOMNode output _in progress_
 			
 - [Color](#colorize-string)
+- [Test](#test)
 
-### Library
+### Get started
 ```bash
 $ npm i atma-logger -save
 ```
 ```javascript
+// 1. embed
 // CommonJS Module
-var logger = require('atma-logger'); /*minified*/
+var logger = require('atma-logger'); 				/*minified*/
 var logger = require('atma-logger/lib/logger-dev'); /*not minified*/
 
 // Exports to `global`
-require('atma-logger/lib/global'); /*minified*/
+require('atma-logger/lib/global');     /*minified*/
 require('atma-logger/lib/global-dev'); /*not minified*/
-    ...
-    logger.log(global);
+
+// 2. Configurate (optional). e.g.: File writer
+logger.cfg({
+	color: 'html',
+	logCaller: false,
+	logDate: 'dd.MM hh:mm',
+	transport: {
+		type: 'fs', 
+		extension: 'html',
+		directory: 'logs/'
+	}
+});
+
+// 3.0 Global logger, e.g:
+logger
+	.log('Foo, {0}!', 'Baz')
+	.error('Global:', global);
+
+// 3.1 Scope logger, e.g:
+var QuxLog = logger.create('Qux', logger.level_DEBUG);
+QuxLog('lorem');
+QuxLog.error('lorem');
+
+// won't log if global loglevel ist lower than 'debug'.
+// to force Qux logs to be printed override the log level of `Qux` logger
+// and set some small level:
+logger.cfg('levels',{
+	'Qux': logger.level_WARN
+	// same as:
+	'Qux': 25
+})
+
+// oder start app with overriden level:
+$ node myapp --level.Qux 25
+
 ```
 ```html
 <!-- Browser -->
 <script src='lib/browser.min.js'></script>
 <script>
+// same usage as with NodeJS:
 logger.cfg(ConfigurationObject)
 logger.log(...args);
 </script>
@@ -368,6 +404,11 @@ HTML and ASCII colors are supports (refer to `color` option).
     'green<bold<lorem> ipsum>'.color
 ```
 
+### Test
+```bash
+$ npm install
+$ npm test
+```
 
 ----
 © MIT
