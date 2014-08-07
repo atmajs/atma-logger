@@ -1,7 +1,0 @@
-git:
-  submodules: false
- 
-script:
-  - "npm test"
- 
-language: node_js

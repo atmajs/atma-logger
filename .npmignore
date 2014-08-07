@@ -1,9 +1,0 @@
-src/
-test/
-builds/
-
-.komodotools
-.npmignore
-*.komodoproject
-
-build.js
