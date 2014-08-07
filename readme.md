@@ -2,6 +2,7 @@ Browser and NodeJS Logger
 ----
 [![Build Status](https://travis-ci.org/atmajs/atma-logger.svg?branch=master)](https://travis-ci.org/atmajs/atma-logger)
 [![NPM version](https://badge.fury.io/js/atma-logger.svg)](http://badge.fury.io/js/atma-logger)
+[![Bower version](https://badge.fury.io/bo/atma-logger.svg)](http://badge.fury.io/bo/atma-logger)
 
 Features:
 - string colors: ascii and html
