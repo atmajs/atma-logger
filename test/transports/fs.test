@@ -45,12 +45,12 @@ UTest({
             file = files[0];
 		
 		eq_(files.length, 1);
-		has_(file.read(), /^2014_ Foo$/gm);
+		has_(file.read(), /^2015_ Foo$/gm);
 		file.content = null;
 		
 		Logger.log('Baz');
-		has_(file.read(), /^2014_ Foo$/gm);
-		has_(file.read(), /^2014_ Baz$/gm);
+		has_(file.read(), /^2015_ Foo$/gm);
+		has_(file.read(), /^2015_ Baz$/gm);
 	},
 	
 	'restart': function(){
@@ -62,9 +62,9 @@ UTest({
             ;
 		
 		eq_(files.length, 1);
-		has_(file.read(), /^2014_ Foo$/gm);
-		has_(file.read(), /^2014_ Baz$/gm);
-		has_(file.read(), /^2014_ Qux$/gm);
+		has_(file.read(), /^2015_ Foo$/gm);
+		has_(file.read(), /^2015_ Baz$/gm);
+		has_(file.read(), /^2015_ Qux$/gm);
 	},
 	
 	'exception': function(done){
