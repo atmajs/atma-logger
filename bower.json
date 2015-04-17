@@ -1,6 +1,6 @@
 {
     "name": "atma-logger",
-    "version": "0.0.89",
+    "version": "1.0.2",
     "homepage": "https://github.com/atmajs/atma-logger",
     "authors": [
         "Alex Kit <alex.kit@atmajs.com>"

@@ -3,12 +3,11 @@ _transports.std = (function(){
 	
 	return {
 		write: function(message){
-			process
-				.stdout
-				.write('\n' + message)
-				;
+			this.put('\n' + message);
 		},
-		
+		put: function(data) {
+			process.stdout.write(data);
+		},
 		cfg: function(){},
         std: true
 	};

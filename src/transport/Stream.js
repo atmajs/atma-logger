@@ -6,6 +6,9 @@ _transports.stream = (function(){
 		write: function(message){
 			_stream.write(message);
 		},
+		put: function(message){
+			_stream.write(message);
+		},
 		
 		cfg: function(config){
 			var stream = config.stream;

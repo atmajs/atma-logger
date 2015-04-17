@@ -11,6 +11,9 @@ _transports.console = (function(){
 			
 			write(mix);
 		},
+		put: function(mix) {
+			this.write(mix);
+		},
 		cfg: function(config){}
 	}
 }());
